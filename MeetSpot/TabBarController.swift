@@ -15,17 +15,20 @@ final class TabBarController: UITabBarController {
     
     self.delegate = self
     
-    setupTabBar()
+    initializeTabBar()
   }
   
   /// TabBarを初期化する
-  private func setupTabBar() {
+  private func initializeTabBar() {
     // MARK: - Initialize ViewController
     let mapVC: MapViewController = MapViewController()
+    let bookmarkVC: BookmarkViewController = BookmarkViewController()
     
     // MARK: - Add Tab Items
     let mapTabBarItem: UITabBarItem = UITabBarItem(title: "見つける", image: UIImage(systemName: "figure.wave"), tag: 0)
     mapVC.tabBarItem = mapTabBarItem
+    let bookmarkTabBarItem: UITabBarItem = UITabBarItem(title: "お気に入り", image: UIImage(systemName: "bookmark.fill"), tag: 0)
+    bookmarkVC.tabBarItem = bookmarkTabBarItem
     
     // MARK: - Add a Static Drop-Shadow to UITabBar
     let tabBarLayer: CALayer = self.tabBar.layer
@@ -48,7 +51,7 @@ final class TabBarController: UITabBarController {
       }
     }
     
-    self.viewControllers = [mapVC]
+    self.viewControllers = [mapVC, bookmarkVC]
   }
 }
 

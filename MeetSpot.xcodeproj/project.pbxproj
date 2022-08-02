@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		140DF6372893C6970057C3CA /* Annotation+AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140DF6362893C6970057C3CA /* Annotation+AnnotationView.swift */; };
 		14560EBD28730192003EA61F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14560EBC28730192003EA61F /* AppDelegate.swift */; };
 		14560EC128730192003EA61F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14560EC028730192003EA61F /* TabBarController.swift */; };
 		14560EC628730195003EA61F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14560EC528730195003EA61F /* Assets.xcassets */; };
 		14560EC928730195003EA61F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14560EC728730195003EA61F /* LaunchScreen.storyboard */; };
+		14A29DDE287FB2BD00F0FC53 /* BookmarkCardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A29DDD287FB2BD00F0FC53 /* BookmarkCardViewCell.swift */; };
 		14B4F77C287DAF39007FC4A0 /* BookmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B4F77B287DAF39007FC4A0 /* BookmarkModel.swift */; };
 		14B4F77E287DAF52007FC4A0 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B4F77D287DAF52007FC4A0 /* BookmarkViewController.swift */; };
-		14B4F780287DAF62007FC4A0 /* BookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B4F77F287DAF62007FC4A0 /* BookmarkView.swift */; };
-		14C506FB287474410090EEDC /* Floaty in Frameworks */ = {isa = PBXBuildFile; productRef = 14C506FA287474410090EEDC /* Floaty */; };
 		14CD8ADF2873FBFA00D9F5CD /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CD8ADE2873FBFA00D9F5CD /* MapViewController.swift */; };
 		14CD8AE528744D5500D9F5CD /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CD8AE428744D5500D9F5CD /* MapView.swift */; };
 		14CD8AE828744E2000D9F5CD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14CD8AE728744E2000D9F5CD /* MapKit.framework */; };
@@ -22,15 +22,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		140DF6362893C6970057C3CA /* Annotation+AnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Annotation+AnnotationView.swift"; sourceTree = "<group>"; };
 		14560EB928730192003EA61F /* MeetSpot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeetSpot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14560EBC28730192003EA61F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14560EC028730192003EA61F /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		14560EC528730195003EA61F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		14560EC828730195003EA61F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		14560ECA28730195003EA61F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		14A29DDD287FB2BD00F0FC53 /* BookmarkCardViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCardViewCell.swift; sourceTree = "<group>"; };
 		14B4F77B287DAF39007FC4A0 /* BookmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkModel.swift; sourceTree = "<group>"; };
 		14B4F77D287DAF52007FC4A0 /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
-		14B4F77F287DAF62007FC4A0 /* BookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkView.swift; sourceTree = "<group>"; };
 		14CD8ADB2873EFBF00D9F5CD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		14CD8ADE2873FBFA00D9F5CD /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		14CD8AE428744D5500D9F5CD /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -44,7 +45,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				14CD8AE828744E2000D9F5CD /* MapKit.framework in Frameworks */,
-				14C506FB287474410090EEDC /* Floaty in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,9 +75,10 @@
 				14560EC028730192003EA61F /* TabBarController.swift */,
 				14CD8AE928745FE400D9F5CD /* MapModel.swift */,
 				14CD8AE428744D5500D9F5CD /* MapView.swift */,
+				140DF6362893C6970057C3CA /* Annotation+AnnotationView.swift */,
 				14CD8ADE2873FBFA00D9F5CD /* MapViewController.swift */,
 				14B4F77B287DAF39007FC4A0 /* BookmarkModel.swift */,
-				14B4F77F287DAF62007FC4A0 /* BookmarkView.swift */,
+				14A29DDD287FB2BD00F0FC53 /* BookmarkCardViewCell.swift */,
 				14B4F77D287DAF52007FC4A0 /* BookmarkViewController.swift */,
 				14560EC528730195003EA61F /* Assets.xcassets */,
 				14560EC728730195003EA61F /* LaunchScreen.storyboard */,
@@ -112,7 +113,6 @@
 			);
 			name = MeetSpot;
 			packageProductDependencies = (
-				14C506FA287474410090EEDC /* Floaty */,
 			);
 			productName = MeetSpot;
 			productReference = 14560EB928730192003EA61F /* MeetSpot.app */;
@@ -143,7 +143,6 @@
 			);
 			mainGroup = 14560EB028730192003EA61F;
 			packageReferences = (
-				14C506F9287474410090EEDC /* XCRemoteSwiftPackageReference "Floaty" */,
 			);
 			productRefGroup = 14560EBA28730192003EA61F /* Products */;
 			projectDirPath = "";
@@ -174,10 +173,11 @@
 				14560EC128730192003EA61F /* TabBarController.swift in Sources */,
 				14CD8AE528744D5500D9F5CD /* MapView.swift in Sources */,
 				14CD8ADF2873FBFA00D9F5CD /* MapViewController.swift in Sources */,
+				14A29DDE287FB2BD00F0FC53 /* BookmarkCardViewCell.swift in Sources */,
 				14B4F77E287DAF52007FC4A0 /* BookmarkViewController.swift in Sources */,
 				14CD8AEA28745FE400D9F5CD /* MapModel.swift in Sources */,
 				14560EBD28730192003EA61F /* AppDelegate.swift in Sources */,
-				14B4F780287DAF62007FC4A0 /* BookmarkView.swift in Sources */,
+				140DF6372893C6970057C3CA /* Annotation+AnnotationView.swift in Sources */,
 				14B4F77C287DAF39007FC4A0 /* BookmarkModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,7 +320,7 @@
 				DEVELOPMENT_TEAM = 9B9T932RXM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeetSpot/Info.plist;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "アプリ起動時に位置情報を取得します";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app uses your location to personalize your app experience.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -349,7 +349,7 @@
 				DEVELOPMENT_TEAM = 9B9T932RXM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeetSpot/Info.plist;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "アプリ起動時に位置情報を取得します";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app uses your location to personalize your app experience.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -390,25 +390,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		14C506F9287474410090EEDC /* XCRemoteSwiftPackageReference "Floaty" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kciter/Floaty.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		14C506FA287474410090EEDC /* Floaty */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 14C506F9287474410090EEDC /* XCRemoteSwiftPackageReference "Floaty" */;
-			productName = Floaty;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 14560EB128730192003EA61F /* Project object */;
 }
