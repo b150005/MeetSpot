@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14077DE028BE678F00E02C8C /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14077DDF28BE678F00E02C8C /* FloatingActionButton.swift */; };
 		140DF6372893C6970057C3CA /* Annotation+AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140DF6362893C6970057C3CA /* Annotation+AnnotationView.swift */; };
 		14560EBD28730192003EA61F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14560EBC28730192003EA61F /* AppDelegate.swift */; };
 		14560EC128730192003EA61F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14560EC028730192003EA61F /* TabBarController.swift */; };
@@ -19,9 +20,11 @@
 		14CD8AE528744D5500D9F5CD /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CD8AE428744D5500D9F5CD /* MapView.swift */; };
 		14CD8AE828744E2000D9F5CD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14CD8AE728744E2000D9F5CD /* MapKit.framework */; };
 		14CD8AEA28745FE400D9F5CD /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CD8AE928745FE400D9F5CD /* MapModel.swift */; };
+		47B55AEE28A6586900A0D67E /* AnnotationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B55AED28A6586900A0D67E /* AnnotationTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14077DDF28BE678F00E02C8C /* FloatingActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
 		140DF6362893C6970057C3CA /* Annotation+AnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Annotation+AnnotationView.swift"; sourceTree = "<group>"; };
 		14560EB928730192003EA61F /* MeetSpot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeetSpot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14560EBC28730192003EA61F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -29,6 +32,7 @@
 		14560EC528730195003EA61F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		14560EC828730195003EA61F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		14560ECA28730195003EA61F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1470E96E28C6108500DBD1A2 /* Test.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Test.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		14A29DDD287FB2BD00F0FC53 /* BookmarkCardViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCardViewCell.swift; sourceTree = "<group>"; };
 		14B4F77B287DAF39007FC4A0 /* BookmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkModel.swift; sourceTree = "<group>"; };
 		14B4F77D287DAF52007FC4A0 /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
@@ -37,6 +41,7 @@
 		14CD8AE428744D5500D9F5CD /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		14CD8AE728744E2000D9F5CD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		14CD8AE928745FE400D9F5CD /* MapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModel.swift; sourceTree = "<group>"; };
+		47B55AED28A6586900A0D67E /* AnnotationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,8 +80,10 @@
 				14560EC028730192003EA61F /* TabBarController.swift */,
 				14CD8AE928745FE400D9F5CD /* MapModel.swift */,
 				14CD8AE428744D5500D9F5CD /* MapView.swift */,
-				140DF6362893C6970057C3CA /* Annotation+AnnotationView.swift */,
+				14077DDF28BE678F00E02C8C /* FloatingActionButton.swift */,
 				14CD8ADE2873FBFA00D9F5CD /* MapViewController.swift */,
+				47B55AED28A6586900A0D67E /* AnnotationTableViewController.swift */,
+				140DF6362893C6970057C3CA /* Annotation+AnnotationView.swift */,
 				14B4F77B287DAF39007FC4A0 /* BookmarkModel.swift */,
 				14A29DDD287FB2BD00F0FC53 /* BookmarkCardViewCell.swift */,
 				14B4F77D287DAF52007FC4A0 /* BookmarkViewController.swift */,
@@ -84,6 +91,7 @@
 				14560EC728730195003EA61F /* LaunchScreen.storyboard */,
 				14560ECA28730195003EA61F /* Info.plist */,
 				14CD8ADB2873EFBF00D9F5CD /* README.md */,
+				1470E96E28C6108500DBD1A2 /* Test.playground */,
 			);
 			path = MeetSpot;
 			sourceTree = "<group>";
@@ -174,10 +182,12 @@
 				14CD8AE528744D5500D9F5CD /* MapView.swift in Sources */,
 				14CD8ADF2873FBFA00D9F5CD /* MapViewController.swift in Sources */,
 				14A29DDE287FB2BD00F0FC53 /* BookmarkCardViewCell.swift in Sources */,
+				47B55AEE28A6586900A0D67E /* AnnotationTableViewController.swift in Sources */,
 				14B4F77E287DAF52007FC4A0 /* BookmarkViewController.swift in Sources */,
 				14CD8AEA28745FE400D9F5CD /* MapModel.swift in Sources */,
 				14560EBD28730192003EA61F /* AppDelegate.swift in Sources */,
 				140DF6372893C6970057C3CA /* Annotation+AnnotationView.swift in Sources */,
+				14077DE028BE678F00E02C8C /* FloatingActionButton.swift in Sources */,
 				14B4F77C287DAF39007FC4A0 /* BookmarkModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

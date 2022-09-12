@@ -1,15 +1,36 @@
-//
-//  TabBarController.swift
-//  MeetSpot
-//
-//  Created by 伊藤 直輝 on 2022/07/04.
-//
-
 import UIKit
 
 /// 各画面共通のTabBarController
 final class TabBarController: UITabBarController {
-  /// 読込直後に呼び出される処理
+  // MARK: - Constants
+  /// `TabBarController`の定数を定義する列挙体
+  private struct Constants {
+    /// `MapViewController`の`UITabBarItem`の`title`
+    static let mapTitle: String = "見つける"
+    /// `BookmarkViewController`のTabBarItemの`title`
+    static let bookmarkTitle: String = "お気に入り"
+    
+    /// `MapViewController`の`UITabBarItem`の`image`
+    static let mapImageName: String = "figure.wave"
+    /// `BookmarkViewController`の`UITabBarItem`の`image`
+    static let bookmarkImageName: String = "bookmark.fill"
+    
+    /// `UITabBarItem`の`tag`
+    static let itemTag: Int = 0
+    
+    /// `UITabBar`の`shadowColor`
+    static let shadowColor: CGColor = UIColor.black.cgColor
+    /// `UITabBar`の`shadowOffset`
+    static let shadowOffset: CGSize = CGSize(width: 0, height: -2)
+    /// `UITabBar`の`shadowRadius`
+    static let shadowRadius: CGFloat = 2
+    /// `UITabBar`の`shadowOpacity`
+    static let shadowOpacity: Float = 0.15
+    
+    static let backgroundColor: UIColor = .clear
+  }
+  
+  /// Viewのロード時に呼び出される処理
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -20,28 +41,31 @@ final class TabBarController: UITabBarController {
   
   /// TabBarを初期化する
   private func initializeTabBar() {
-    // MARK: - Initialize ViewController
     let mapVC: MapViewController = MapViewController()
     let bookmarkVC: BookmarkViewController = BookmarkViewController()
     
-    // MARK: - Add Tab Items
-    let mapTabBarItem: UITabBarItem = UITabBarItem(title: "見つける", image: UIImage(systemName: "figure.wave"), tag: 0)
+    let mapTabBarItem: UITabBarItem = UITabBarItem(
+      title: Constants.mapTitle,
+      image: UIImage(systemName: Constants.mapImageName),
+      tag: Constants.itemTag)
     mapVC.tabBarItem = mapTabBarItem
-    let bookmarkTabBarItem: UITabBarItem = UITabBarItem(title: "お気に入り", image: UIImage(systemName: "bookmark.fill"), tag: 0)
+    let bookmarkTabBarItem: UITabBarItem = UITabBarItem(
+      title: Constants.bookmarkTitle,
+      image: UIImage(systemName: Constants.bookmarkImageName),
+      tag: Constants.itemTag)
     bookmarkVC.tabBarItem = bookmarkTabBarItem
     
-    // MARK: - Add a Static Drop-Shadow to UITabBar
     let tabBarLayer: CALayer = self.tabBar.layer
-    tabBarLayer.shadowColor = UIColor.black.cgColor
-    tabBarLayer.shadowOffset = CGSize(width: 0, height: -2)
-    tabBarLayer.shadowRadius = 2
-    tabBarLayer.shadowOpacity = 0.15
+    tabBarLayer.shadowPath = UIBezierPath(rect: view.bounds).cgPath
+    tabBarLayer.shadowColor = Constants.shadowColor
+    tabBarLayer.shadowOffset = Constants.shadowOffset
+    tabBarLayer.shadowRadius = Constants.shadowRadius
+    tabBarLayer.shadowOpacity = Constants.shadowOpacity
     
-    // MARK: - UITabBarAppearance
     if #available(iOS 13.0, *) {
       let customAppearance: UITabBarAppearance = UITabBarAppearance()
       customAppearance.configureWithDefaultBackground()
-      customAppearance.backgroundColor = .clear
+      customAppearance.backgroundColor = Constants.backgroundColor
       
       let appearance: UITabBar = UITabBar.appearance()
       appearance.standardAppearance = customAppearance

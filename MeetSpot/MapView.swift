@@ -1,25 +1,22 @@
-//
-//  MapView.swift
-//  MeetSpot
-//
-//  Created by 伊藤 直輝 on 2022/07/05.
-//
-
 import UIKit
 import MapKit
 
+/// MapViewのプレゼンテーションロジックを扱うView
 final class MapView: UIView {
   // MARK: - Constants
-  private static let borderWidth: CGFloat = 0.3
-  private static let shadowOffset: CGSize = CGSize(width: 2, height: 2)
-  private static let shadowRadius: CGFloat = 2
-  private static let shadowOpacity: Float = 0.15
-  private static let FABLength: CGFloat = 56
-  private static let viewConstraint: CGFloat = 15
+  private struct Constants {
+    static let currentLocationButtonImageName: String = "location.fill"
+    static let annotationListButtonImageName: String = "list.bullet"
+    
+    static let buttonState: UIControl.State = .normal
+    
+    static let viewConstraint: CGFloat = 15
+    static let zoomInDelta: CGFloat = 0.005
+  }
   
   // MARK: - Views
   /// 画面全体に表示するマップ
-  lazy var mapView: MKMapView = {
+  private lazy var mapView: MKMapView = {
     let mapView: MKMapView = MKMapView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     mapView.isPitchEnabled = true
     mapView.isRotateEnabled = true
@@ -28,7 +25,7 @@ final class MapView: UIView {
     mapView.mapType = .standard
     
     mapView.register(
-      AnnotationView.self,
+      MarkerAnnotationView.self,
       forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier
     )
 
@@ -36,59 +33,27 @@ final class MapView: UIView {
   }()
   
   /// 現在地の2D座標を取得するボタン
-  lazy var currentLocationButton: UIButton = {
-    let button: UIButton = UIButton(type: .custom)
+  private lazy var currentLocationButton: FloatingActionButton = {
+    let button: FloatingActionButton = FloatingActionButton(
+      systemName: Constants.currentLocationButtonImageName,
+      state: Constants.buttonState)
     
     // Constraints
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setNeedsUpdateConstraints()
-    
-    // Frame Size
-    button.setNeedsLayout()
-    
-    // Icon & Interaction
-    button.setImage(UIImage(systemName: "location.fill"), for: .normal)
-    button.backgroundColor = .white
-    button.tintColor = .systemBlue
-    
-    // Border
-    button.layer.borderColor = UIColor.gray.cgColor
-    button.layer.borderWidth = MapView.borderWidth
-    
-    // Shadow
-    button.layer.shadowColor = UIColor.black.cgColor
-    button.layer.shadowOffset = MapView.shadowOffset
-    button.layer.shadowRadius = MapView.shadowRadius
-    button.layer.shadowOpacity = MapView.shadowOpacity
     
     return button
   }()
   
-  /// 指定地点の2D座標を取得するボタン
-  lazy var specificLocationButton: UIButton = {
-    let button: UIButton = UIButton(type: .custom)
+  /// MapViewのアノテーションリストを表示するボタン
+  private lazy var annotationListButton: FloatingActionButton = {
+    let button: FloatingActionButton = FloatingActionButton(
+      systemName: Constants.annotationListButtonImageName,
+      state: Constants.buttonState)
     
     // Constraints
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setNeedsUpdateConstraints()
-    
-    // Frame Size
-    button.setNeedsLayout()
-    
-    // Icon & Interaction
-    button.setImage(UIImage(systemName: "mappin.and.ellipse"), for: .normal)
-    button.backgroundColor = .white
-    button.tintColor = .systemBlue
-    
-    // Border
-    button.layer.borderColor = UIColor.gray.cgColor
-    button.layer.borderWidth = MapView.borderWidth
-    
-    // Shadow
-    button.layer.shadowColor = UIColor.black.cgColor
-    button.layer.shadowOffset = MapView.shadowOffset
-    button.layer.shadowRadius = MapView.shadowRadius
-    button.layer.shadowOpacity = MapView.shadowOpacity
     
     return button
   }()
@@ -136,11 +101,15 @@ final class MapView: UIView {
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     
+    mapView.delegate = self
+    
     addSubViews()
   }
   
   override init(frame: CGRect) {
     super.init(frame: frame)
+    
+    mapView.delegate = self
     
     addSubViews()
   }
@@ -148,42 +117,48 @@ final class MapView: UIView {
   // MARK: - Override Methods
   /// 制約の更新
   override func updateConstraints() {
-    NSLayoutConstraint.activate([
-      currentLocationButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -MapView.viewConstraint),
-      currentLocationButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -MapView.viewConstraint * 8),
-      currentLocationButton.widthAnchor.constraint(equalToConstant: MapView.FABLength),
-      currentLocationButton.heightAnchor.constraint(equalToConstant: MapView.FABLength)
-    ])
-    NSLayoutConstraint.activate([
-      specificLocationButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -MapView.viewConstraint),
-      specificLocationButton.bottomAnchor.constraint(equalTo: currentLocationButton.topAnchor, constant: -MapView.viewConstraint),
-      specificLocationButton.widthAnchor.constraint(equalToConstant: MapView.FABLength),
-      specificLocationButton.heightAnchor.constraint(equalToConstant: MapView.FABLength)
-    ])
-    
     super.updateConstraints()
-  }
-  
-  /// `UIView#frame`の更新
-  override func layoutSubviews() {
-    super.layoutSubviews()
     
-    // UIButtonを丸くする
-    currentLocationButton.layer.cornerRadius = currentLocationButton.frame.width / 2
-    specificLocationButton.layer.cornerRadius = specificLocationButton.frame.width / 2
+    NSLayoutConstraint.activate([
+      currentLocationButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constants.viewConstraint),
+      currentLocationButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Constants.viewConstraint * 8)
+    ])
+    NSLayoutConstraint.activate([
+      annotationListButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constants.viewConstraint),
+      annotationListButton.bottomAnchor.constraint(equalTo: currentLocationButton.topAnchor, constant: -Constants.viewConstraint)
+    ])
   }
 }
 
+// MARK: - Extension
 extension MapView {
+  /// MapViewのマップビューを取得する
+  /// - returns: MapViewの`MKMapView`オブジェクト
+  func getMapView() -> MKMapView {
+    return self.mapView
+  }
+  
+  /// MapViewの現在地取得ボタンを取得する
+  /// - returns: MapViewの現在地取得を行う`FloatingActionButton`オブジェクト
+  func getCurrentLocationButton() -> FloatingActionButton {
+    return self.currentLocationButton
+  }
+  
+  /// MapViewのアノテーションリスト表示ボタンを取得する
+  /// - returns: MapViewのアノテーション一覧を表示する`FloatingActionButton`オブジェクト
+  func getAnnotationListButton() -> FloatingActionButton {
+    return self.annotationListButton
+  }
+  
   /// サブViewの追加
   private func addSubViews() {
-    // MARK: - Add views
     addSubview(mapView)
     addSubview(currentLocationButton)
-    addSubview(specificLocationButton)
+    addSubview(annotationListButton)
   }
   
   /// タップ時のUIButtonアニメーション
+  /// - parameter button: タップされるボタン
   func startAnimation(_ button: UIButton) {
     // TODO: - Pulse Animationの実装
     UIView.animate(withDuration: 0.6, delay: 0, options: .curveLinear, animations: {() -> Void in
@@ -196,15 +171,74 @@ extension MapView {
   }
   
   /// 指定地点をズームインして表示する
+  /// - parameter coordinate: ズームイン時に画面中央に表示される2D座標
   func zoomInMapView(_ coordinate: CLLocationCoordinate2D) {
-    let span: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+    let span: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: Constants.zoomInDelta, longitudeDelta: Constants.zoomInDelta)
     let region: MKCoordinateRegion = MKCoordinateRegion(center: coordinate, span: span)
     
     mapView.setRegion(region, animated: true)
   }
   
-  /// マップにピンを設置する
-  func dropAnnotation(_ coordinate: CLLocationCoordinate2D) {
-//    let annotation: 
+  /// マップにアノテーションを追加する
+  /// - parameter annotation: 2D座標と地名情報をもつアノテーション
+  func addAnnotation(_ annotation: Annotation) {
+    mapView.addAnnotation(annotation)
+  }
+  
+  /// MapView上でタップされた地点の2D座標を取得する
+  /// - parameter tappedPoint: 画面スクリーン上の2D座標
+  /// - returns: タップされた地点の2D座標
+  func convertTapPointIntoCoordinate2D(_ tappedPoint: CGPoint) -> CLLocationCoordinate2D {
+    return mapView.convert(tappedPoint, toCoordinateFrom: mapView)
+  }
+  
+  /// MapViewにジェスチャーを追加する
+  /// - parameter recognizer: `UIGestureRecognizer`のサブクラスであるジェスチャー認識クラス
+  func addGestureRecognizerToMapView<T: UIGestureRecognizer>(_ recognizer: T) {
+    mapView.addGestureRecognizer(recognizer)
+  }
+  
+  /// MapViewのアノテーションを取得する
+  /// - returns: MapViewのアノテーション
+  func fetchAnnotations() -> [Annotation]? {
+    guard let annotations: [Annotation] = mapView.annotations as? [Annotation] else { return nil }
+    return annotations
+  }
+}
+
+// TODO: - MKMapViewDelegate
+extension MapView: MKMapViewDelegate {
+  /// MapViewに追加するアノテーションを作成する
+  func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    let identifier: String = MKMapViewDefaultAnnotationViewReuseIdentifier
+    
+    var markerAnnotationView: MarkerAnnotationView
+    
+    if let customAnnotationView: MarkerAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MarkerAnnotationView {
+      customAnnotationView.annotation = annotation
+      markerAnnotationView = customAnnotationView
+    }
+    else {
+      let defaultMarkerAnnotationView: MarkerAnnotationView = MarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+      markerAnnotationView = defaultMarkerAnnotationView
+    }
+    
+    return markerAnnotationView
+  }
+  
+  /// アノテーションビューの追加時に呼び出される処理
+  func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+    
+  }
+  
+  /// アノテーションのAccessoryボタンをタップした際の処理
+  func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    if let cluster = view.annotation as? MKClusterAnnotation {
+      mapView.removeAnnotations(cluster.memberAnnotations)
+    }
+    else {
+      guard let annotation: MKAnnotation = view.annotation else { return }
+      mapView.removeAnnotation(annotation)
+    }
   }
 }

@@ -8,6 +8,8 @@
 import UIKit
 
 final class BookmarkViewController: UITableViewController {
+  static private let cellIdentifier: String = "cardViewCell"
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -26,7 +28,11 @@ final class BookmarkViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell: BookmarkCardViewCell = tableView.dequeueReusableCell(withIdentifier: "cardViewCell", for: indexPath) as! BookmarkCardViewCell
+    let cell: BookmarkCardViewCell = tableView.dequeueReusableCell(
+      withIdentifier: BookmarkViewController.cellIdentifier,
+      for: indexPath
+    ) as! BookmarkCardViewCell
+    
     return cell
   }
   
@@ -49,7 +55,7 @@ final class BookmarkViewController: UITableViewController {
 extension BookmarkViewController {
   /// TableViewに表示するTableViewCellを登録する
   private func registerCell() {
-    self.tableView.register(BookmarkCardViewCell.self, forCellReuseIdentifier: "cardViewCell")
+    self.tableView.register(BookmarkCardViewCell.self, forCellReuseIdentifier: BookmarkViewController.cellIdentifier)
   }
   
   /// TableViewのレイアウトを設定する
