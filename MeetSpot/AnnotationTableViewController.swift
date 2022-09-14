@@ -9,16 +9,20 @@ import UIKit
 
 /// MapViewに追加したアノテーションをリスト形式で表示するTableViewController
 final class AnnotationTableViewController: UITableViewController {
+  /// アノテーションリスト
   private var annotations: [Annotation]?
+  
+  /// 現在地の更新をViewControllerに通知する`NotificationCenter`
+  private let notificationCenter: NotificationCenter = NotificationCenter.default
   
   init(annotations: [Annotation]?, style: UITableView.Style = .plain) {
     super.init(style: style)
     
-    guard let annotations: [Annotation] = annotations else { return }
-    self.annotations = annotations
-    
     // UITableView ⇄ UITableViewCell の紐付け
     registerCell()
+    
+    guard let annotations: [Annotation] = annotations else { return }
+    self.annotations = annotations
   }
   
   required init?(coder: NSCoder) {
@@ -29,12 +33,6 @@ final class AnnotationTableViewController: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = false
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem
   }
   
   // MARK: - Table view data source
@@ -60,7 +58,8 @@ final class AnnotationTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
     
-    guard let annotations: [Annotation] = annotations, let title: String = annotations[indexPath.row].title else { return cell }
+    guard let annotations: [Annotation] = annotations,
+          let title: String = annotations[indexPath.row].title else { return cell }
     var content: UIListContentConfiguration = cell.defaultContentConfiguration()
     content.text = title
     cell.contentConfiguration = content
@@ -68,23 +67,30 @@ final class AnnotationTableViewController: UITableViewController {
     return cell
   }
   
-  // Override to support conditional editing of the table view.
+  /// セルの編集を有効にする
   override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-    // Return false if you do not want the specified item to be editable.
     return true
   }
   
-  /*
-   // Override to support editing the table view.
-   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-   if editingStyle == .delete {
-   // Delete the row from the data source
-   tableView.deleteRows(at: [indexPath], with: .fade)
-   } else if editingStyle == .insert {
-   // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-   }
-   }
-   */
+  /// セル編集時の処理を定義する
+  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
+                          forRowAt indexPath: IndexPath) {
+    guard let _ = annotations else { return }
+    
+    if editingStyle == .delete {
+      // NotificationCenterにアノテーションの削除を通知
+      notificationCenter.post(
+        name: .didDeleteAnnotation,
+        object: nil,
+        userInfo: [UserInfoKeys.deletedAnnotation : annotations![indexPath.row] as Any]
+      )
+      
+      annotations!.remove(at: indexPath.row)
+      
+      // TableViewのアノテーションを削除
+      tableView.deleteRows(at: [indexPath], with: .fade)
+    }
+  }
 }
 
 extension AnnotationTableViewController {
@@ -92,4 +98,8 @@ extension AnnotationTableViewController {
   private func registerCell() {
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
   }
+}
+
+extension Notification.Name {
+  static let didDeleteAnnotation: Notification.Name = Notification.Name("AnnotationTableViewController.editingStyle.delete")
 }

@@ -8,7 +8,8 @@ final class MapView: UIView {
     static let currentLocationButtonImageName: String = "location.fill"
     static let annotationListButtonImageName: String = "list.bullet"
     
-    static let buttonState: UIControl.State = .normal
+    static let routingButtonTitle: String = "移動時間が等しい中間地点を検索する"
+    static let routingButtonBackgroundColor: UIColor = .white
     
     static let viewConstraint: CGFloat = 15
     static let zoomInDelta: CGFloat = 0.005
@@ -34,9 +35,7 @@ final class MapView: UIView {
   
   /// 現在地の2D座標を取得するボタン
   private lazy var currentLocationButton: FloatingActionButton = {
-    let button: FloatingActionButton = FloatingActionButton(
-      systemName: Constants.currentLocationButtonImageName,
-      state: Constants.buttonState)
+    let button: FloatingActionButton = FloatingActionButton(systemName: Constants.currentLocationButtonImageName)
     
     // Constraints
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -47,9 +46,17 @@ final class MapView: UIView {
   
   /// MapViewのアノテーションリストを表示するボタン
   private lazy var annotationListButton: FloatingActionButton = {
-    let button: FloatingActionButton = FloatingActionButton(
-      systemName: Constants.annotationListButtonImageName,
-      state: Constants.buttonState)
+    let button: FloatingActionButton = FloatingActionButton(systemName: Constants.annotationListButtonImageName)
+    
+    // Constraints
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setNeedsUpdateConstraints()
+    
+    return button
+  }()
+  
+  private lazy var routingButton: UIButton = {
+    let button: FloatingActionButton = FloatingActionButton(title: "wow")
     
     // Constraints
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -127,6 +134,10 @@ final class MapView: UIView {
       annotationListButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constants.viewConstraint),
       annotationListButton.bottomAnchor.constraint(equalTo: currentLocationButton.topAnchor, constant: -Constants.viewConstraint)
     ])
+    NSLayoutConstraint.activate([
+      routingButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      routingButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 80)
+    ])
   }
 }
 
@@ -155,6 +166,7 @@ extension MapView {
     addSubview(mapView)
     addSubview(currentLocationButton)
     addSubview(annotationListButton)
+    addSubview(routingButton)
   }
   
   /// タップ時のUIButtonアニメーション
@@ -224,11 +236,6 @@ extension MapView: MKMapViewDelegate {
     }
     
     return markerAnnotationView
-  }
-  
-  /// アノテーションビューの追加時に呼び出される処理
-  func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
-    
   }
   
   /// アノテーションのAccessoryボタンをタップした際の処理

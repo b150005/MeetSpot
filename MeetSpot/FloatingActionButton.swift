@@ -5,6 +5,8 @@ open class FloatingActionButton: UIButton {
   private struct Constants {
     static let size: CGFloat = 56
     
+    static let padding: UIEdgeInsets = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
+    
     static let backgroundColor: UIColor = .systemBlue
     static let tintColor: UIColor = .white
     
@@ -17,45 +19,73 @@ open class FloatingActionButton: UIButton {
     static let shadowOpacity: Float = 0.4
   }
   
-  /// ボタンの一辺の長さ
-  @IBInspectable
-  open var size: CGFloat = Constants.size {
-    didSet {
-      layer.cornerRadius = size / 2
-      
-      // Viewの再描画
-      self.setNeedsDisplay()
-    }
-  }
-  
   /// 影を表現する`CAShapeLayer`
   private let shadowLayer: CAShapeLayer = CAShapeLayer()
   
   /// 最小描画サイズ
   @IBInspectable
   public override var intrinsicContentSize: CGSize {
-    let size: CGSize = CGSize(width: Constants.size, height: Constants.size)
+    var size: CGSize = CGSize(width: frame.size.width, height: frame.size.height)
+    
+    // 文字列を含む場合はpaddingを付与
+    if let _ = currentTitle {
+      size.width += Constants.padding.left + Constants.padding.right
+      size.height += Constants.padding.top + Constants.padding.bottom
+    }
+    
     return size
   }
   
+  /// 背景色
+  /// `UIView#draw(_:)`でボタンに設定される
+  @IBInspectable
+  private let defaultBackgroundColor: UIColor?
+  
+  /// コンテンツの色
+  /// `UIView#draw(_:)`でボタンに設定される
+  @IBInspectable
+  private let defaultTintColor: UIColor?
+  
   // MARK: - Initializer
-  public init(systemName: String, state: UIControl.State) {
-    super.init(frame: CGRect(x: 0, y: 0, width: size, height: size))
+  /// 1つの`UIImage`をもつボタンを生成する
+  public init(width: CGFloat = 56, height: CGFloat = 56,
+              systemName: String, backgroundColor: UIColor = .red, tintColor: UIColor = .white,
+              state: UIControl.State = .normal) {
+    defaultBackgroundColor = backgroundColor
+    defaultTintColor = tintColor
+    
+    super.init(frame: CGRect(x: 0, y: 0, width: width, height: height))
     
     guard let image: UIImage = UIImage(systemName: systemName) else { return }
-    self.setImage(image, for: state)
+    setImage(image, for: state)
+  }
+  
+  /// 1つの`UILabel`をもつボタンを生成する
+  public init(width: CGFloat = 100, height: CGFloat = 30,
+              title: String, titleColor: UIColor = .white,
+              backgroundColor: UIColor = .red, tintColor: UIColor = .systemBlue,
+              state: UIControl.State = .normal) {
+    defaultBackgroundColor = backgroundColor
+    defaultTintColor = tintColor
+    
+    super.init(frame: CGRect(x: 0, y: 0, width: width, height: height))
+    
+    setTitle(title, for: state)
+    setTitleColor(titleColor, for: state)
   }
   
   public override init(frame: CGRect) {
-    super.init(frame: frame)
+    defaultBackgroundColor = .systemBlue
+    defaultTintColor = .white
     
-    size = min(frame.size.height, frame.size.width)
+    super.init(frame: frame)
   }
   
   public required init?(coder: NSCoder) {
-    super.init(coder: coder)
+    defaultBackgroundColor = .systemBlue
+    defaultTintColor = .white
     
-    size = min(frame.size.height, frame.size.width)
+    super.init(coder: coder)
   }
   
   // MARK: - Layout
@@ -69,17 +99,24 @@ open class FloatingActionButton: UIButton {
 extension FloatingActionButton {
   /// `UIView#draw(_:)`メソッドで呼び出す設定処理
   private func configureWithDraw() {
-    configureIcon()
+    configureColor()
+    configureLayer()
     configureShadow()
-    configureRasterization()
   }
   
-  /// アイコンを設定する
-  private func configureIcon() {
-    backgroundColor = Constants.backgroundColor
-    tintColor = Constants.tintColor
+  /// 色を設定する
+  private func configureColor() {
+    backgroundColor = defaultBackgroundColor
+    tintColor = defaultTintColor
+  }
+  
+  /// レイヤーを設定する
+  private func configureLayer() {
+    layer.shouldRasterize = true
+    layer.rasterizationScale = UIScreen.main.scale
     
-    layer.cornerRadius = size / 2
+    let minLength: CGFloat = min(frame.size.width, frame.size.height)
+    layer.cornerRadius = minLength / 2
     
     layer.borderColor = Constants.borderColor
     layer.borderWidth = Constants.borderWidth
@@ -103,11 +140,5 @@ extension FloatingActionButton {
     shadowLayer.shadowOpacity = Constants.shadowOpacity
     
     layer.insertSublayer(shadowLayer, at: 0)
-  }
-  
-  /// ラスタライズを設定する
-  private func configureRasterization() {
-    layer.shouldRasterize = true
-    layer.rasterizationScale = UIScreen.main.scale
   }
 }

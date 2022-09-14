@@ -12,7 +12,7 @@ final class BookmarkCardViewCell: UITableViewCell {
   // MARK: - Constants
   private static let viewConstraint: CGFloat = 12
   private static let cornerRadius: CGFloat = 7
-  private static let font: UIFont = UIFont.systemFont(ofSize: 22)
+  private static let font: UIFont = UIFont.systemFont(ofSize: 20)
   
   // MARK: - Views
   /// contentViewの台紙となるView
@@ -144,11 +144,6 @@ final class BookmarkCardViewCell: UITableViewCell {
     ])
     
     super.updateConstraints()
-  }
-  
-  /// `UIView#frame`の更新
-  override func layoutSubviews() {
-    super.layoutSubviews()
   }
   
   /// 選択時に呼び出される処理

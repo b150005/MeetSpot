@@ -3,7 +3,7 @@ import CoreLocation
 
 /// マップモデル(MapModel)とマップ画面(MapView)を紐付けるViewController
 final class MapViewController: UIViewController {
-  /// MapModelから通知を受け取る`NotificationCenter`
+  /// `MapModel`, `AnnotationTableViewController`から通知を受け取る`NotificationCenter`
   private let notificationCenter: NotificationCenter = NotificationCenter.default
   
   /// ビジネスロジックを扱うModel
@@ -43,9 +43,11 @@ extension MapViewController {
     notificationCenter.addObserver(
       forName: .didUpdateCurrentLocation,
       object: nil,
-      queue: OperationQueue.main,
+      queue: .main,
       using: { [weak self] (notification: Notification) -> Void in
-        guard let coordinate: CLLocationCoordinate2D = notification.userInfo?["coordinate"] as? CLLocationCoordinate2D else { return }
+        guard let coordinate: CLLocationCoordinate2D = notification.userInfo?[UserInfoKeys.coordinate] as? CLLocationCoordinate2D
+        else { return }
+        
         self?.mapView.zoomInMapView(coordinate)
       }
     )
@@ -54,10 +56,24 @@ extension MapViewController {
     notificationCenter.addObserver(
       forName: .didFailWithError,
       object: nil,
-      queue: OperationQueue.main,
+      queue: .main,
       using: { [weak self] (notification: Notification) -> Void in
         self?.present(MapView.temporaryErrorAlert, animated: true)
-      })
+      }
+    )
+    
+    // AnnotationTableViewでアノテーションが削除された場合はMapViewのアノテーションも削除
+    notificationCenter.addObserver(
+      forName: .didDeleteAnnotation,
+      object: nil,
+      queue: .main,
+      using: { [weak self] (notification: Notification) -> Void in
+        guard let deletedAnnotation: Annotation = notification.userInfo?[UserInfoKeys.deletedAnnotation] as? Annotation
+        else { return }
+        
+        self?.mapView.getMapView().removeAnnotation(deletedAnnotation)
+      }
+    )
   }
   
   /// Viewにジェスチャーを追加する
@@ -131,7 +147,6 @@ extension MapViewController {
     // 長押しした地点をマップの中心にする
     let point: CGPoint = gesture.location(in: mapView.getMapView())
     let coordinate: CLLocationCoordinate2D = mapView.convertTapPointIntoCoordinate2D(point)
-    mapView.zoomInMapView(coordinate)
     
     // 長押しした地点の逆ジオコーディング
     let location: CLLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)

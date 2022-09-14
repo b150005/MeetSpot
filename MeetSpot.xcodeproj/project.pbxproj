@@ -20,6 +20,7 @@
 		14CD8AE528744D5500D9F5CD /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CD8AE428744D5500D9F5CD /* MapView.swift */; };
 		14CD8AE828744E2000D9F5CD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14CD8AE728744E2000D9F5CD /* MapKit.framework */; };
 		14CD8AEA28745FE400D9F5CD /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CD8AE928745FE400D9F5CD /* MapModel.swift */; };
+		14D2F97528CF4E5100643455 /* UserInfoKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D2F97428CF4E5100643455 /* UserInfoKeys.swift */; };
 		47B55AEE28A6586900A0D67E /* AnnotationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B55AED28A6586900A0D67E /* AnnotationTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		14CD8AE428744D5500D9F5CD /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		14CD8AE728744E2000D9F5CD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		14CD8AE928745FE400D9F5CD /* MapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModel.swift; sourceTree = "<group>"; };
+		14D2F97428CF4E5100643455 /* UserInfoKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoKeys.swift; sourceTree = "<group>"; };
 		47B55AED28A6586900A0D67E /* AnnotationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +81,7 @@
 				14560EBC28730192003EA61F /* AppDelegate.swift */,
 				14560EC028730192003EA61F /* TabBarController.swift */,
 				14CD8AE928745FE400D9F5CD /* MapModel.swift */,
+				14D2F97428CF4E5100643455 /* UserInfoKeys.swift */,
 				14CD8AE428744D5500D9F5CD /* MapView.swift */,
 				14077DDF28BE678F00E02C8C /* FloatingActionButton.swift */,
 				14CD8ADE2873FBFA00D9F5CD /* MapViewController.swift */,
@@ -182,6 +185,7 @@
 				14CD8AE528744D5500D9F5CD /* MapView.swift in Sources */,
 				14CD8ADF2873FBFA00D9F5CD /* MapViewController.swift in Sources */,
 				14A29DDE287FB2BD00F0FC53 /* BookmarkCardViewCell.swift in Sources */,
+				14D2F97528CF4E5100643455 /* UserInfoKeys.swift in Sources */,
 				47B55AEE28A6586900A0D67E /* AnnotationTableViewController.swift in Sources */,
 				14B4F77E287DAF52007FC4A0 /* BookmarkViewController.swift in Sources */,
 				14CD8AEA28745FE400D9F5CD /* MapModel.swift in Sources */,

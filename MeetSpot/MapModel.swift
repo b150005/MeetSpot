@@ -3,12 +3,6 @@ import MapKit
 
 /// MapViewのビジネスロジックを扱うModel
 final class MapModel: NSObject {
-  // MARK: - Constants
-  private struct Constants {
-    /// 現在地の更新時に`NotificationCenter`が通知する辞書のキー
-    static let coordinateUserInfoKey: String = "coordinate"
-  }
-  
   /// 現在地の更新をViewControllerに通知する`NotificationCenter`
   private let notificationCenter: NotificationCenter = NotificationCenter.default
   
@@ -67,7 +61,7 @@ extension MapModel: CLLocationManagerDelegate {
     notificationCenter.post(
       name: .didUpdateCurrentLocation,
       object: nil,
-      userInfo: [Constants.coordinateUserInfoKey: coordinate])
+      userInfo: [UserInfoKeys.coordinate : coordinate])
   }
   
   /// 現在地の取得に失敗した場合に呼び出される処理
