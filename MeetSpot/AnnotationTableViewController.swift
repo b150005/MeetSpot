@@ -1,34 +1,26 @@
-//
-//  AnnotationTableViewController.swift
-//  MeetSpot
-//
-//  Created by 伊藤 直輝 on 2022/08/12.
-//
-
 import UIKit
+import MapKit
 
 /// MapViewに追加したアノテーションをリスト形式で表示するTableViewController
+@MainActor
 final class AnnotationTableViewController: UITableViewController {
   /// アノテーションリスト
-  private var annotations: [Annotation]?
+  private var annotations: [MKAnnotation]?
   
   /// 現在地の更新をViewControllerに通知する`NotificationCenter`
   private let notificationCenter: NotificationCenter = NotificationCenter.default
   
-  init(annotations: [Annotation]?, style: UITableView.Style = .plain) {
+  init(annotations: [MKAnnotation], style: UITableView.Style = .plain) {
     super.init(style: style)
     
     // UITableView ⇄ UITableViewCell の紐付け
     registerCell()
     
-    guard let annotations: [Annotation] = annotations else { return }
     self.annotations = annotations
   }
   
   required init?(coder: NSCoder) {
-    super.init(coder: coder)
-    
-    self.annotations = [Annotation]()
+    fatalError()
   }
   
   override func viewDidLoad() {
@@ -49,8 +41,7 @@ final class AnnotationTableViewController: UITableViewController {
   ///  - section: セクション番号
   /// - returns: セクションあたりに表示するセル数
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    guard let annotations = annotations else { return 0 }
-    
+    guard let annotations else { return 0 }
     return annotations.count
   }
   
@@ -58,8 +49,8 @@ final class AnnotationTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
     
-    guard let annotations: [Annotation] = annotations,
-          let title: String = annotations[indexPath.row].title else { return cell }
+    guard let title: String = annotations?[indexPath.row].title ?? nil else { return cell }
+    
     var content: UIListContentConfiguration = cell.defaultContentConfiguration()
     content.text = title
     cell.contentConfiguration = content
@@ -75,17 +66,15 @@ final class AnnotationTableViewController: UITableViewController {
   /// セル編集時の処理を定義する
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
                           forRowAt indexPath: IndexPath) {
-    guard let _ = annotations else { return }
-    
     if editingStyle == .delete {
       // NotificationCenterにアノテーションの削除を通知
       notificationCenter.post(
         name: .didDeleteAnnotation,
         object: nil,
-        userInfo: [UserInfoKeys.deletedAnnotation : annotations![indexPath.row] as Any]
+        userInfo: [UserInfoKeys.removedAnnotation : annotations?[indexPath.row] as Any]
       )
       
-      annotations!.remove(at: indexPath.row)
+      annotations?.remove(at: indexPath.row)
       
       // TableViewのアノテーションを削除
       tableView.deleteRows(at: [indexPath], with: .fade)

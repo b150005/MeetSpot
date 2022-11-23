@@ -1,0 +1,73 @@
+// Error
+"error" = "Error";
+"settings" = "Settings";
+"noResult" = "
+Application cannot find your current location by Internal Error.
+";
+"notFoundLocation" = "
+Application cannot acquire your current location.
+";
+"locationServicesDisabled" = "
+Location services authorization has been changed and location information can no longer be acquired.
+";
+"locationServicesRestricted" = "
+Allow applications to acquire your current location.
+Settings > MeetSpot > Location Service
+";
+"locationServicesDenied" = "
+Enable Location Services to acquire your current Location.
+Settings > Privacy > Location Service
+";
+"reverseGeocodingRequestRateLimited" = "
+Reverse-Geocoding failed.
+Try again later.
+";
+// TabBarItem
+"mapTitle" = "Search";
+"bookmarkTitle" = "Bookmark";
+// Title
+"routingTitle" = "Search Meeting Spot";
+"routingSectionTitle" = "Recommended Meeting Spot, Route";
+"locationFilterSectionTitle" = "Location Search Filter";
+// LocationFilter
+"airport" = "Airport";
+"amusementPark" = "AmusementPark";
+"aquarium" = "Aquarium";
+"atm" = "ATM";
+"bakery" = "Bakery";
+"bank" = "Bank";
+"beach" = "Beach";
+"brewery" = "Brewery";
+"cafe" = "Cafe";
+"campground" = "Campground";
+"carRental" = "CarRental";
+"evCharger" = "EVCharger";
+"fireStation" = "FireStation";
+"fitnessCenter" = "FitnessCenter";
+"foodMarket" = "FoodMarket";
+"gasStation" = "GasStation";
+"hospital" = "Hospital";
+"hotel" = "Hotel";
+"laundry" = "Laundry";
+"library" = "Library";
+"marina" = "Marina";
+"movieTheater" = "MovieTheater";
+"museum" = "Museum";
+"nationalPark" = "NationalPark";
+"nightlife" = "Nightlife";
+"park" = "Park";
+"parking" = "Parking";
+"pharmacy" = "Pharmacy";
+"police" = "Police";
+"postOffice" = "PostOffice";
+"publicTransport" = "PublicTransport";
+"restaurant" = "Restaurant";
+"restroom" = "Restroom";
+"school" = "School";
+"stadium" = "Stadium";
+"store" = "Store";
+"theater" = "Theater";
+"university" = "University";
+"winery" = "Winery";
+"zoo" = "Zoo";
+

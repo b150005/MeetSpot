@@ -1,0 +1,74 @@
+// Error
+"error" = "エラー";
+"settings" = "設定";
+"noResult" = "
+位置情報が見つかりません。
+";
+"notFoundLocation" = "
+位置情報を取得できませんでした。
+";
+"locationServicesDisabled" = "
+位置情報サービスの権限が変更され、位置情報が取得できませんでした。
+";
+"locationServicesRestricted" = "
+アプリケーションによる位置情報の取得を許可してください。
+設定 > MeetSpot > 位置情報
+";
+"locationServicesDenied" = "
+位置情報を有効にするには、位置情報サービスをオンにしてください。
+設定 > プライバシーとセキュリティ > 位置情報サービス
+";
+"reverseGeocodingRequestRateLimited" = "
+逆ジオコーディングに失敗しました。
+時間を空けて再度お試しください。
+";
+// TabBarItem
+"mapTitle" = "見つける";
+"bookmarkTitle" = "お気に入り";
+// Title
+"routingTitle" = "中間地点を検索する";
+"routingSectionTitle" = "おすすめの集合地点とその経路";
+"locationFilterSectionTitle" = "検索フィルタ";
+// LocationFilter
+"airport" = "空港";
+"amusementPark" = "遊園地";
+"aquarium" = "水族館";
+"atm" = "ATM";
+"bakery" = "パン屋";
+"bank" = "銀行";
+"beach" = "海";
+"brewery" = "ビール工場";
+"cafe" = "カフェ";
+"campground" = "キャンプ場";
+"carRental" = "レンタカー";
+"evCharger" = "EVチャージ";
+"fireStation" = "消防署";
+"fitnessCenter" = "フィットネス";
+"foodMarket" = "スーパー";
+"gasStation" = "ガソリンスタンド";
+"hospital" = "病院";
+"hotel" = "ホテル";
+"laundry" = "コインランドリー";
+"library" = "図書館";
+"marina" = "ヨット";
+"movieTheater" = "映画館";
+"museum" = "美術館";
+"nationalPark" = "国立公園";
+"nightlife" = "深夜営業";
+"park" = "公園";
+"parking" = "駐車場";
+"pharmacy" = "薬局";
+"police" = "警察署";
+"postOffice" = "郵便局";
+"publicTransport" = "公共交通機関";
+"restaurant" = "レストラン";
+"restroom" = "トイレ";
+"school" = "学校";
+"stadium" = "競技場";
+"store" = "百貨店";
+"theater" = "劇場";
+"university" = "大学";
+"winery" = "ワイン工場";
+"zoo" = "動物園";
+
+

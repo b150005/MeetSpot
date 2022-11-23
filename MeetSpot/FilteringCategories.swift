@@ -1,0 +1,47 @@
+import OrderedCollections
+import MapKit
+
+struct FilteringCategories {
+  static let categories: OrderedDictionary<String, MKPointOfInterestCategory> = [
+    NSLocalizedString("airport", comment: "") : .airport,
+    NSLocalizedString("amusementPark", comment: "") : .amusementPark,
+    NSLocalizedString("aquarium", comment: "") : .aquarium,
+    NSLocalizedString("atm", comment: "") : .atm,
+    NSLocalizedString("bakery", comment: "") : .bakery,
+    NSLocalizedString("bank", comment: "") : .bank,
+    NSLocalizedString("beach", comment: "") : .beach,
+    NSLocalizedString("brewery", comment: "") : .brewery,
+    NSLocalizedString("cafe", comment: "") : .cafe,
+    NSLocalizedString("campground", comment: "") : .campground,
+    NSLocalizedString("carRental", comment: "") : .carRental,
+    NSLocalizedString("evCharger", comment: "") : .evCharger,
+    NSLocalizedString("fireStation", comment: "") : .fireStation,
+    NSLocalizedString("fitnessCenter", comment: "") : .fitnessCenter,
+    NSLocalizedString("foodMarket", comment: "") : .foodMarket,
+    NSLocalizedString("gasStation", comment: "") : .gasStation,
+    NSLocalizedString("hospital", comment: "") : .hospital,
+    NSLocalizedString("hotel", comment: "") : .hotel,
+    NSLocalizedString("laundry", comment: "") : .laundry,
+    NSLocalizedString("library", comment: "") : .library,
+    NSLocalizedString("marina", comment: "") : .marina,
+    NSLocalizedString("movieTheater", comment: "") : .movieTheater,
+    NSLocalizedString("museum", comment: "") : .museum,
+    NSLocalizedString("nationalPark", comment: "") : .nationalPark,
+    NSLocalizedString("nightlife", comment: "") : .nightlife,
+    NSLocalizedString("park", comment: "") : .park,
+    NSLocalizedString("parking", comment: "") : .parking,
+    NSLocalizedString("pharmacy", comment: "") : .pharmacy,
+    NSLocalizedString("police", comment: "") : .police,
+    NSLocalizedString("postOffice", comment: "") : .postOffice,
+    NSLocalizedString("publicTransport", comment: "") : .publicTransport,
+    NSLocalizedString("restaurant", comment: "") : .restaurant,
+    NSLocalizedString("restroom", comment: "") : .restroom,
+    NSLocalizedString("school", comment: "") : .school,
+    NSLocalizedString("stadium", comment: "") : .stadium,
+    NSLocalizedString("store", comment: "") : .store,
+    NSLocalizedString("theater", comment: "") : .theater,
+    NSLocalizedString("university", comment: "") : .university,
+    NSLocalizedString("winery", comment: "") : .winery,
+    NSLocalizedString("zoo", comment: "") : .zoo
+  ]
+}
