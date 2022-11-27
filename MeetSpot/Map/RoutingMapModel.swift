@@ -1,11 +1,12 @@
 @preconcurrency import CoreLocation
-import MapKit
+@preconcurrency import MapKit
 
 protocol RoutingMapModelInput {
   func currentLocation() async throws -> CLLocation
   func reverseGeocodeLocation(_ location: CLLocation) async throws-> CLPlacemark
 //  func requestRoute(_ locations: [MKPlacemark]) async throws -> [MKDirections.Response?]
-//  func searchLookAroundScene(from annotation: Annotation) async -> MKLookAroundScene?
+  func requestLookAroundScene(from coordinate: CLLocationCoordinate2D) async -> MKLookAroundScene?
+  func snapshootLookAround(_ scene: MKLookAroundScene?) async -> MKLookAroundSnapshotter.Snapshot?
 }
 
 actor RoutingMapModel: NSObject {
@@ -165,9 +166,25 @@ extension RoutingMapModel: RoutingMapModelInput {
 //    return [try await directions.calculate()]
 //  }
 //
-//  func searchLookAroundScene(from annotation: Annotation) -> MKLookAroundScene? {
-//    let sceneRequest: MKLookAroundSceneRequest = MKLookAroundSceneRequest(coordinate: annotation.coordinate)
-//    guard let scene: MKLookAroundScene = try? await sceneRequest.scene else { return nil }
-//    return scene
-//  }
+  func requestLookAroundScene(from coordinate: CLLocationCoordinate2D) async -> MKLookAroundScene? {
+    do {
+      let request: MKLookAroundSceneRequest = MKLookAroundSceneRequest(coordinate: coordinate)
+      guard let scene: MKLookAroundScene = try await request.scene else { return nil }
+      return scene
+    }
+    catch {
+      return nil
+    }
+  }
+  
+  func snapshootLookAround(_ scene: MKLookAroundScene?) async -> MKLookAroundSnapshotter.Snapshot? {
+    do {
+      guard let scene else { return nil }
+      let snapshotter: MKLookAroundSnapshotter = MKLookAroundSnapshotter(scene: scene, options: .init())
+      return try await snapshotter.snapshot
+    }
+    catch {
+      return nil
+    }
+  }
 }

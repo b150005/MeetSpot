@@ -1,22 +1,22 @@
 @preconcurrency import CoreLocation
-import MapKit
+@preconcurrency import MapKit
 
 @MainActor
 protocol RoutingMapPresenterInput {
   func didLongPressRoutingMap(_ location: CLLocation)
-  func didTapLookAroundView()
   func didTapRoutingButton()
   func didTapCurrentLocationButton()
   func didTapAnnotationListButton(_ annotations: [MKPointAnnotation])
+  func didTapLookAroundView()
 }
 
 @MainActor
 protocol RoutingMapPresenterOutput: AnyObject {
   func addAnnotation(_ annotation: MKPointAnnotation)
   
-  func showLookAroundScene(_ scene: MKLookAroundScene)
+  func updateLookAroundView(scene: MKLookAroundScene?, snapshot: MKLookAroundSnapshotter.Snapshot?)
   
-  func transitionToLookAround(_ scene: MKLookAroundScene)
+  func transitionToLookAround()
   
   func updateRoutingHalfModal()
   
@@ -47,7 +47,12 @@ extension RoutingMapPresenter: RoutingMapPresenterInput {
         let annotation: MKPointAnnotation = MKPointAnnotation()
         annotation.coordinate = location.coordinate
         annotation.title = placemark.annotationTitle
+        
         view.addAnnotation(annotation)
+        
+        let scene: MKLookAroundScene? = await model.requestLookAroundScene(from: location.coordinate)
+        let snapshot: MKLookAroundSnapshotter.Snapshot? = await model.snapshootLookAround(scene)
+        view.updateLookAroundView(scene: scene, snapshot: snapshot)
       }
       catch {
         let error: NSError = error as NSError
@@ -57,7 +62,7 @@ extension RoutingMapPresenter: RoutingMapPresenterInput {
   }
   
   func didTapLookAroundView() {
-    
+    view.transitionToLookAround()
   }
   
   func didTapRoutingButton() {

@@ -1,5 +1,5 @@
 import UIKit
-import MapKit
+@preconcurrency import MapKit
 
 @MainActor
 final class RoutingMapViewController: UIViewController {
@@ -15,6 +15,8 @@ final class RoutingMapViewController: UIViewController {
   
   private let annotationListButton: FloatingActionButton = FloatingActionButton(image: UIImage(systemName: "list.bullet"))
   
+  private let lookAroundImageView: LookAroundImageView = LookAroundImageView()
+  
   override func loadView() {
     mapView.delegate = self
     view = mapView
@@ -24,10 +26,12 @@ final class RoutingMapViewController: UIViewController {
     configureRoutingButton()
     configureCurrentLocationButton()
     configureAnnotationListButton()
+    configureLookAroundImageView()
     
     view.addSubview(currentLocationButton)
     view.addSubview(annotationListButton)
     view.addSubview(routingButton)
+    view.addSubview(lookAroundImageView)
   }
   
   override func viewDidLoad() {
@@ -57,6 +61,13 @@ final class RoutingMapViewController: UIViewController {
       routingButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       routingButton.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.defaultConstraint * 5)
     ])
+    
+    NSLayoutConstraint.activate([
+      lookAroundImageView.widthAnchor.constraint(equalToConstant: view.frame.width / 4),
+      lookAroundImageView.heightAnchor.constraint(equalToConstant: view.frame.height / 10),
+      lookAroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.defaultConstraint),
+      lookAroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.defaultConstraint * 8)
+    ])
   }
 }
 
@@ -84,11 +95,16 @@ extension RoutingMapViewController {
     mapView.showsCompass = true
     mapView.showsUserLocation = true
     mapView.setUserTrackingMode(.followWithHeading, animated: true)
+    
     mapView.selectableMapFeatures = [.pointsOfInterest]
     
     let configuration: MKStandardMapConfiguration = MKStandardMapConfiguration(elevationStyle: .flat, emphasisStyle: .default)
     configuration.showsTraffic = true
     mapView.preferredConfiguration = configuration
+    
+    let delta: CLLocationDegrees = 0.2
+    let span: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: delta, longitudeDelta: delta)
+    mapView.setRegion(MKCoordinateRegion(center: mapView.centerCoordinate, span: span), animated: true)
     
     mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
     
@@ -144,11 +160,27 @@ extension RoutingMapViewController {
     let location: CLLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
     presenter.didLongPressRoutingMap(location)
   }
+  
+  private func configureLookAroundImageView() {
+    lookAroundImageView.isHidden = true
+    lookAroundImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapLookAroundImageView)))
+    lookAroundImageView.isUserInteractionEnabled = true
+    lookAroundImageView.sizeToFit()
+    
+    lookAroundImageView.translatesAutoresizingMaskIntoConstraints = false
+    lookAroundImageView.setNeedsUpdateConstraints()
+  }
+  
+  @objc private func didTapLookAroundImageView() {
+    presenter.didTapLookAroundView()
+  }
 }
 
 // MARK: - MKMapViewDelegate
 extension RoutingMapViewController: MKMapViewDelegate {
   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    if annotation is MKUserLocation { return nil }
+    
     let identifier: String = MKMapViewDefaultAnnotationViewReuseIdentifier
     let clusteringIdentifier: String = "clustering"
     
@@ -179,11 +211,12 @@ extension RoutingMapViewController: MKMapViewDelegate {
     button.setImage(UIImage(systemName: "trash"), for: .normal)
     view.rightCalloutAccessoryView = button
     
-    guard let feature: MKMapFeatureAnnotation = annotation as? MKMapFeatureAnnotation,
-          let icon: MKIconStyle = feature.iconStyle
-    else { return view }
-    let imageView: UIImageView = UIImageView(image: icon.image.withTintColor(icon.backgroundColor, renderingMode: .alwaysOriginal))
-    view.leftCalloutAccessoryView = imageView
+    // TODO: MKMapItemRequest + MKMapFeatureAnnotationを用いたカテゴライズ
+//    guard let feature: MKMapFeatureAnnotation = annotation as? MKMapFeatureAnnotation,
+//          let icon: MKIconStyle = feature.iconStyle
+//    else { return view }
+//    let imageView: UIImageView = UIImageView(image: icon.image.withTintColor(icon.backgroundColor, renderingMode: .alwaysOriginal))
+//    view.leftCalloutAccessoryView = imageView
     
     return view
   }
@@ -195,12 +228,21 @@ extension RoutingMapViewController: RoutingMapPresenterOutput {
     mapView.addAnnotation(annotation)
   }
   
-  func showLookAroundScene(_ scene: MKLookAroundScene) {
+  func updateLookAroundView(scene: MKLookAroundScene?, snapshot: MKLookAroundSnapshotter.Snapshot?) {
+    lookAroundImageView.scene = scene
+    lookAroundImageView.image = snapshot?.image
     
+    lookAroundImageView.isHidden = (lookAroundImageView.scene == nil || lookAroundImageView.image == nil) ? true : false
   }
   
-  func transitionToLookAround(_ scene: MKLookAroundScene) {
+  func transitionToLookAround() {
+    guard let scene: MKLookAroundScene = lookAroundImageView.scene else { return }
     
+    let lookAroundVC: MKLookAroundViewController = MKLookAroundViewController(scene: scene)
+    lookAroundVC.isNavigationEnabled = true
+    lookAroundVC.showsRoadLabels = true
+    
+    present(lookAroundVC, animated: true)
   }
   
   func updateRoutingHalfModal() {
@@ -209,7 +251,6 @@ extension RoutingMapViewController: RoutingMapPresenterOutput {
   
   func showAnnotationList() {
     let annotationListVC: AnnotationTableViewController = AnnotationTableViewController(annotations: mapView.annotations)
-//    navigationController?.pushViewController(annotationListVC, animated: true)
     present(annotationListVC, animated: true)
   }
   
