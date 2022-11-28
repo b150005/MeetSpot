@@ -166,6 +166,8 @@ extension RoutingMapViewController {
     lookAroundImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapLookAroundImageView)))
     lookAroundImageView.isUserInteractionEnabled = true
     lookAroundImageView.sizeToFit()
+    lookAroundImageView.clipsToBounds = true
+    lookAroundImageView.layer.cornerRadius = 10
     
     lookAroundImageView.translatesAutoresizingMaskIntoConstraints = false
     lookAroundImageView.setNeedsUpdateConstraints()
