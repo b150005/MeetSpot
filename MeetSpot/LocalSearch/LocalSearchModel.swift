@@ -1,7 +1,7 @@
 import CoreLocation
 import MapKit
 
-protocol SearchHalfModalModelInput {
+protocol LocalSearchModelInput {
   var localSearchCompleter: MKLocalSearchCompleter { get }
   
   func calculateETAIntermediateSpot(from coordinate: CLLocationCoordinate2D) async -> [RoutingResponse]?
@@ -12,7 +12,7 @@ protocol SearchHalfModalModelInput {
   func createSearchToken(from indexPath: IndexPath) async -> UISearchToken
 }
 
-final class SearchHalfModalModel: NSObject, SearchHalfModalModelInput {
+final class LocalSearchModel: NSObject, LocalSearchModelInput {
   private var hasUpdatedLocationSearchResults: Bool = false
   
   lazy var localSearchCompleter: MKLocalSearchCompleter = {
@@ -81,18 +81,20 @@ final class SearchHalfModalModel: NSObject, SearchHalfModalModelInput {
   }
   
   func createSearchToken(from indexPath: IndexPath) async -> UISearchToken {
-    let filter: (key: String, value: MKPointOfInterestCategory) = FilteringCategories.categories.elements[indexPath.row]
-    let token: UISearchToken = await UISearchToken(icon: nil, text: filter.key)
-    
-    Task { @MainActor in
-      token.representedObject = filter.value
-    }
-    
-    return token
+//    let filter: (key: String, value: MKPointOfInterestCategory) = (
+//
+//    )
+//    let token: UISearchToken = await UISearchToken(icon: nil, text: filter.key)
+//
+//    Task { @MainActor in
+//      token.representedObject = filter.value
+//    }
+//
+//    return token
   }
 }
 
-extension SearchHalfModalModel: MKLocalSearchCompleterDelegate {
+extension LocalSearchModel: MKLocalSearchCompleterDelegate {
   func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
     hasUpdatedLocationSearchResults = true
   }

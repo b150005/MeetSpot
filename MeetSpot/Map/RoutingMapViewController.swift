@@ -17,25 +17,26 @@ final class RoutingMapViewController: UIViewController {
   
   private let lookAroundImageView: LookAroundImageView = LookAroundImageView()
   
+  private let searchHalfModalVC: LocalSearchViewController = LocalSearchViewController()
+  
   override func loadView() {
     mapView.delegate = self
-    view = mapView
-    
     configureNotificationCenter()
     configureMapView()
     configureRoutingButton()
     configureCurrentLocationButton()
     configureAnnotationListButton()
     configureLookAroundImageView()
-    
-    view.addSubview(currentLocationButton)
-    view.addSubview(annotationListButton)
-    view.addSubview(routingButton)
-    view.addSubview(lookAroundImageView)
+    configureSearchHalfModal()
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    presentSearchHalfModal()
   }
   
   override func updateViewConstraints() {
@@ -47,26 +48,26 @@ final class RoutingMapViewController: UIViewController {
     ])
     
     NSLayoutConstraint.activate([
-      currentLocationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.defaultConstraint),
-      currentLocationButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.defaultConstraint * 8)
+      currentLocationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.margin),
+      currentLocationButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.margin * 8)
     ])
     
     NSLayoutConstraint.activate([
-      annotationListButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.defaultConstraint),
-      annotationListButton.bottomAnchor.constraint(equalTo: currentLocationButton.topAnchor, constant: -Constants.defaultConstraint)
+      annotationListButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.margin),
+      annotationListButton.bottomAnchor.constraint(equalTo: currentLocationButton.topAnchor, constant: -Constants.margin)
     ])
     
     NSLayoutConstraint.activate([
       routingButton.widthAnchor.constraint(equalToConstant: view.frame.width / 2),
       routingButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      routingButton.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.defaultConstraint * 5)
+      routingButton.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.margin * 5)
     ])
     
     NSLayoutConstraint.activate([
       lookAroundImageView.widthAnchor.constraint(equalToConstant: view.frame.width / 4),
       lookAroundImageView.heightAnchor.constraint(equalToConstant: view.frame.height / 10),
-      lookAroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.defaultConstraint),
-      lookAroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.defaultConstraint * 8)
+      lookAroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.margin),
+      lookAroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.margin * 8)
     ])
   }
 }
@@ -111,7 +112,8 @@ extension RoutingMapViewController {
     mapView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didLongPressMapView)))
     
     mapView.translatesAutoresizingMaskIntoConstraints = false
-    mapView.setNeedsUpdateConstraints()                                                                       
+    mapView.setNeedsUpdateConstraints()
+    view = mapView
   }
   
   private func configureCurrentLocationButton() {
@@ -122,6 +124,7 @@ extension RoutingMapViewController {
     
     currentLocationButton.translatesAutoresizingMaskIntoConstraints = false
     currentLocationButton.setNeedsUpdateConstraints()
+    view.addSubview(currentLocationButton)
   }
   
   private func configureRoutingButton() {
@@ -132,6 +135,7 @@ extension RoutingMapViewController {
     
     routingButton.translatesAutoresizingMaskIntoConstraints = false
     routingButton.setNeedsUpdateConstraints()
+    view.addSubview(routingButton)
   }
   
   private func configureAnnotationListButton() {
@@ -142,6 +146,7 @@ extension RoutingMapViewController {
     
     annotationListButton.translatesAutoresizingMaskIntoConstraints = false
     annotationListButton.setNeedsUpdateConstraints()
+    view.addSubview(annotationListButton)
   }
   
   private func annotations() -> [MKPointAnnotation] {
@@ -171,10 +176,36 @@ extension RoutingMapViewController {
     
     lookAroundImageView.translatesAutoresizingMaskIntoConstraints = false
     lookAroundImageView.setNeedsUpdateConstraints()
+    view.addSubview(lookAroundImageView)
   }
   
   @objc private func didTapLookAroundImageView() {
     presenter.didTapLookAroundView()
+  }
+  
+  private func configureSearchHalfModal() {
+    let model: LocalSearchModel = LocalSearchModel()
+    let presenter: LocalSearchPresenterInput = LocalSearchPresenter(view: searchHalfModalVC, model: model)
+    searchHalfModalVC.inject(presenter: presenter)
+    
+    searchHalfModalVC.isModalInPresentation = true
+    if let sheet: UISheetPresentationController = searchHalfModalVC.sheetPresentationController {
+      sheet.detents = [
+        .custom { (context: UISheetPresentationControllerDetentResolutionContext) -> CGFloat? in
+          return context.maximumDetentValue * 0.1
+        },
+        .medium(),
+        .large()
+      ]
+      sheet.largestUndimmedDetentIdentifier = .medium
+      sheet.prefersGrabberVisible = true
+      sheet.prefersEdgeAttachedInCompactHeight = true
+      sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+    }
+  }
+  
+  private func presentSearchHalfModal() {
+    present(searchHalfModalVC, animated: false)
   }
 }
 

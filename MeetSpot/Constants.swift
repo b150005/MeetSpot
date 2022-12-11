@@ -7,5 +7,5 @@ struct Constants {
   static let shadowOpacity: Float = 0.15
   static let backgroundColor: UIColor = .clear
   
-  static let defaultConstraint: CGFloat = 15
+  static let margin: CGFloat = 15
 }

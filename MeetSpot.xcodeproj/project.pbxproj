@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14064806293F152900A189D9 /* FilteringCategory.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14064805293F152900A189D9 /* FilteringCategory.xcassets */; };
+		14064808293F480700A189D9 /* LocalSearchResultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14064807293F480700A189D9 /* LocalSearchResultTableViewController.swift */; };
 		14073AFE28DEA64F00F8C754 /* RoutingMapPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14073AFD28DEA64F00F8C754 /* RoutingMapPresenter.swift */; };
 		14073B0228DECFCB00F8C754 /* RoutingMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14073B0128DECFCB00F8C754 /* RoutingMapViewController.swift */; };
 		14077DE028BE678F00E02C8C /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14077DDF28BE678F00E02C8C /* FloatingActionButton.swift */; };
-		142ED35828E8862C00C1E092 /* SearchHalfModalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142ED35728E8862C00C1E092 /* SearchHalfModalModel.swift */; };
+		142ED35828E8862C00C1E092 /* LocalSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142ED35728E8862C00C1E092 /* LocalSearchModel.swift */; };
 		1450C1F6291785D100EFC44E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1450C1F5291785D100EFC44E /* Constants.swift */; };
 		14560EBD28730192003EA61F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14560EBC28730192003EA61F /* AppDelegate.swift */; };
 		14560EC128730192003EA61F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14560EC028730192003EA61F /* TabBarController.swift */; };
@@ -20,27 +22,28 @@
 		148138D2293317D70064FDD4 /* LookAroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148138D1293317D70064FDD4 /* LookAroundImageView.swift */; };
 		14A29DDE287FB2BD00F0FC53 /* BookmarkCardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A29DDD287FB2BD00F0FC53 /* BookmarkCardViewCell.swift */; };
 		14AF652C28E484BA0084497F /* FilteringCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF652B28E484BA0084497F /* FilteringCategories.swift */; };
-		14AF652E28E48C3C0084497F /* UITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF652D28E48C3C0084497F /* UITableViewCell.swift */; };
 		14B4F77C287DAF39007FC4A0 /* BookmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B4F77B287DAF39007FC4A0 /* BookmarkModel.swift */; };
 		14B4F77E287DAF52007FC4A0 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B4F77D287DAF52007FC4A0 /* BookmarkViewController.swift */; };
-		14C2C27B28E702D500DAFC27 /* SearchHalfModalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2C27A28E702D500DAFC27 /* SearchHalfModalPresenter.swift */; };
+		14B9AECE293B302E00839651 /* CardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B9AECD293B302E00839651 /* CardTableViewCell.swift */; };
+		14C2C27B28E702D500DAFC27 /* LocalSearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2C27A28E702D500DAFC27 /* LocalSearchPresenter.swift */; };
 		14C2C27D28E71DD300DAFC27 /* RoutingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2C27C28E71DD300DAFC27 /* RoutingResponse.swift */; };
 		14CD8AE828744E2000D9F5CD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14CD8AE728744E2000D9F5CD /* MapKit.framework */; };
 		14D2F97528CF4E5100643455 /* UserInfoKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D2F97428CF4E5100643455 /* UserInfoKeys.swift */; };
 		14DAEE9728DDDE0A0099DBC1 /* RoutingMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAEE9628DDDE0A0099DBC1 /* RoutingMapModel.swift */; };
 		14DAEE9928DDDEFB0099DBC1 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAEE9828DDDEFB0099DBC1 /* Alert.swift */; };
-		14E1B05F28E329E500640703 /* LocalSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E1B05E28E329E500640703 /* LocalSearchTableViewController.swift */; };
 		14E1B06228E3327900640703 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 14E1B06428E3327900640703 /* Localizable.strings */; };
-		14EEDF1328E008F300BE4EF1 /* SearchHalfModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EEDF1228E008F300BE4EF1 /* SearchHalfModalViewController.swift */; };
+		14EF70DA293B34E000AF8129 /* LocalSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF70D9293B34E000AF8129 /* LocalSearchViewController.swift */; };
 		474FA4DF291F6D19000E9773 /* CLPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474FA4DE291F6D19000E9773 /* CLPlacemark.swift */; };
 		47B55AEE28A6586900A0D67E /* AnnotationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B55AED28A6586900A0D67E /* AnnotationTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14064805293F152900A189D9 /* FilteringCategory.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FilteringCategory.xcassets; sourceTree = "<group>"; };
+		14064807293F480700A189D9 /* LocalSearchResultTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSearchResultTableViewController.swift; sourceTree = "<group>"; };
 		14073AFD28DEA64F00F8C754 /* RoutingMapPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingMapPresenter.swift; sourceTree = "<group>"; };
 		14073B0128DECFCB00F8C754 /* RoutingMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingMapViewController.swift; sourceTree = "<group>"; };
 		14077DDF28BE678F00E02C8C /* FloatingActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
-		142ED35728E8862C00C1E092 /* SearchHalfModalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHalfModalModel.swift; sourceTree = "<group>"; };
+		142ED35728E8862C00C1E092 /* LocalSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSearchModel.swift; sourceTree = "<group>"; };
 		1450C1F5291785D100EFC44E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		14560EB928730192003EA61F /* MeetSpot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeetSpot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14560EBC28730192003EA61F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -52,20 +55,19 @@
 		148138D1293317D70064FDD4 /* LookAroundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookAroundImageView.swift; sourceTree = "<group>"; };
 		14A29DDD287FB2BD00F0FC53 /* BookmarkCardViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCardViewCell.swift; sourceTree = "<group>"; };
 		14AF652B28E484BA0084497F /* FilteringCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteringCategories.swift; sourceTree = "<group>"; };
-		14AF652D28E48C3C0084497F /* UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCell.swift; sourceTree = "<group>"; };
 		14B4F77B287DAF39007FC4A0 /* BookmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkModel.swift; sourceTree = "<group>"; };
 		14B4F77D287DAF52007FC4A0 /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
-		14C2C27A28E702D500DAFC27 /* SearchHalfModalPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHalfModalPresenter.swift; sourceTree = "<group>"; };
+		14B9AECD293B302E00839651 /* CardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTableViewCell.swift; sourceTree = "<group>"; };
+		14C2C27A28E702D500DAFC27 /* LocalSearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSearchPresenter.swift; sourceTree = "<group>"; };
 		14C2C27C28E71DD300DAFC27 /* RoutingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingResponse.swift; sourceTree = "<group>"; };
 		14CD8ADB2873EFBF00D9F5CD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		14CD8AE728744E2000D9F5CD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		14D2F97428CF4E5100643455 /* UserInfoKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoKeys.swift; sourceTree = "<group>"; };
 		14DAEE9628DDDE0A0099DBC1 /* RoutingMapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingMapModel.swift; sourceTree = "<group>"; };
 		14DAEE9828DDDEFB0099DBC1 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
-		14E1B05E28E329E500640703 /* LocalSearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSearchTableViewController.swift; sourceTree = "<group>"; };
 		14E1B06528E332D500640703 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		14E1B06628E33B6000640703 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		14EEDF1228E008F300BE4EF1 /* SearchHalfModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHalfModalViewController.swift; sourceTree = "<group>"; };
+		14EF70D9293B34E000AF8129 /* LocalSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSearchViewController.swift; sourceTree = "<group>"; };
 		474FA4DE291F6D19000E9773 /* CLPlacemark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLPlacemark.swift; sourceTree = "<group>"; };
 		47B55AED28A6586900A0D67E /* AnnotationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,6 +85,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		142A050A29349ACF00A17680 /* LocalSearch */ = {
+			isa = PBXGroup;
+			children = (
+				142ED35728E8862C00C1E092 /* LocalSearchModel.swift */,
+				14C2C27A28E702D500DAFC27 /* LocalSearchPresenter.swift */,
+				14EF70D9293B34E000AF8129 /* LocalSearchViewController.swift */,
+				14064807293F480700A189D9 /* LocalSearchResultTableViewController.swift */,
+			);
+			path = LocalSearch;
+			sourceTree = "<group>";
+		};
 		14560EB028730192003EA61F = {
 			isa = PBXGroup;
 			children = (
@@ -107,24 +120,22 @@
 				14560EBC28730192003EA61F /* AppDelegate.swift */,
 				14560EC028730192003EA61F /* TabBarController.swift */,
 				1450C1F5291785D100EFC44E /* Constants.swift */,
+				14D2F97428CF4E5100643455 /* UserInfoKeys.swift */,
 				14DAEE9828DDDEFB0099DBC1 /* Alert.swift */,
 				474FA4DE291F6D19000E9773 /* CLPlacemark.swift */,
-				14E577D328DB305D00F51BA6 /* Map */,
-				14D2F97428CF4E5100643455 /* UserInfoKeys.swift */,
-				14EEDF1228E008F300BE4EF1 /* SearchHalfModalViewController.swift */,
-				14C2C27A28E702D500DAFC27 /* SearchHalfModalPresenter.swift */,
-				142ED35728E8862C00C1E092 /* SearchHalfModalModel.swift */,
 				14C2C27C28E71DD300DAFC27 /* RoutingResponse.swift */,
 				148138D1293317D70064FDD4 /* LookAroundImageView.swift */,
-				14E1B05E28E329E500640703 /* LocalSearchTableViewController.swift */,
-				14AF652D28E48C3C0084497F /* UITableViewCell.swift */,
+				14E577D328DB305D00F51BA6 /* Map */,
+				142A050A29349ACF00A17680 /* LocalSearch */,
 				14AF652B28E484BA0084497F /* FilteringCategories.swift */,
 				14077DDF28BE678F00E02C8C /* FloatingActionButton.swift */,
 				47B55AED28A6586900A0D67E /* AnnotationTableViewController.swift */,
 				14B4F77B287DAF39007FC4A0 /* BookmarkModel.swift */,
 				14A29DDD287FB2BD00F0FC53 /* BookmarkCardViewCell.swift */,
+				14B9AECD293B302E00839651 /* CardTableViewCell.swift */,
 				14B4F77D287DAF52007FC4A0 /* BookmarkViewController.swift */,
 				14560EC528730195003EA61F /* Assets.xcassets */,
+				14064805293F152900A189D9 /* FilteringCategory.xcassets */,
 				14560EC728730195003EA61F /* LaunchScreen.storyboard */,
 				14560ECA28730195003EA61F /* Info.plist */,
 				14CD8ADB2873EFBF00D9F5CD /* README.md */,
@@ -216,6 +227,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14064806293F152900A189D9 /* FilteringCategory.xcassets in Resources */,
 				14560EC928730195003EA61F /* LaunchScreen.storyboard in Resources */,
 				14E1B06228E3327900640703 /* Localizable.strings in Resources */,
 				14560EC628730195003EA61F /* Assets.xcassets in Resources */,
@@ -230,11 +242,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				14AF652C28E484BA0084497F /* FilteringCategories.swift in Sources */,
-				14AF652E28E48C3C0084497F /* UITableViewCell.swift in Sources */,
 				14560EC128730192003EA61F /* TabBarController.swift in Sources */,
-				14EEDF1328E008F300BE4EF1 /* SearchHalfModalViewController.swift in Sources */,
-				14E1B05F28E329E500640703 /* LocalSearchTableViewController.swift in Sources */,
-				142ED35828E8862C00C1E092 /* SearchHalfModalModel.swift in Sources */,
+				142ED35828E8862C00C1E092 /* LocalSearchModel.swift in Sources */,
 				14C2C27D28E71DD300DAFC27 /* RoutingResponse.swift in Sources */,
 				14073AFE28DEA64F00F8C754 /* RoutingMapPresenter.swift in Sources */,
 				14A29DDE287FB2BD00F0FC53 /* BookmarkCardViewCell.swift in Sources */,
@@ -244,10 +253,13 @@
 				14B4F77E287DAF52007FC4A0 /* BookmarkViewController.swift in Sources */,
 				14DAEE9728DDDE0A0099DBC1 /* RoutingMapModel.swift in Sources */,
 				148138D2293317D70064FDD4 /* LookAroundImageView.swift in Sources */,
-				14C2C27B28E702D500DAFC27 /* SearchHalfModalPresenter.swift in Sources */,
+				14EF70DA293B34E000AF8129 /* LocalSearchViewController.swift in Sources */,
+				14C2C27B28E702D500DAFC27 /* LocalSearchPresenter.swift in Sources */,
 				14560EBD28730192003EA61F /* AppDelegate.swift in Sources */,
 				14073B0228DECFCB00F8C754 /* RoutingMapViewController.swift in Sources */,
+				14B9AECE293B302E00839651 /* CardTableViewCell.swift in Sources */,
 				474FA4DF291F6D19000E9773 /* CLPlacemark.swift in Sources */,
+				14064808293F480700A189D9 /* LocalSearchResultTableViewController.swift in Sources */,
 				14077DE028BE678F00E02C8C /* FloatingActionButton.swift in Sources */,
 				14B4F77C287DAF39007FC4A0 /* BookmarkModel.swift in Sources */,
 				1450C1F6291785D100EFC44E /* Constants.swift in Sources */,
