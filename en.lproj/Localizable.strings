@@ -26,9 +26,9 @@ Try again later.
 "mapTitle" = "Search";
 "bookmarkTitle" = "Bookmark";
 // Title
+"filterLabel" = "Search Filter";
 "routingTitle" = "Search Meeting Spot";
 "routingSectionTitle" = "Recommended Meeting Spot, Route";
-"locationFilterSectionTitle" = "Location Search Filter";
 // LocationFilter
 "airport" = "Airport";
 "amusementPark" = "AmusementPark";

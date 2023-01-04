@@ -1,18 +1,16 @@
-import CoreLocation
-import MapKit
+@preconcurrency import CoreLocation
+@preconcurrency import MapKit
 
 protocol LocalSearchModelInput {
-  var localSearchCompleter: MKLocalSearchCompleter { get }
-  
+  func searchLocation(from query: String, in filter: MKPointOfInterestFilter) async -> [MKLocalSearchCompletion]
   func calculateETAIntermediateSpot(from coordinate: CLLocationCoordinate2D) async -> [RoutingResponse]?
-  func updateSearchRegion(center: CLLocationCoordinate2D, radius: CLLocationDistance)
+  func updateSearchRegion(center: CLLocationCoordinate2D, radius: CLLocationDistance) async
   @MainActor func extractFilter(from tokens: [UISearchToken]) -> MKPointOfInterestFilter
-  func searchLocation(from query: String?, in filter: MKPointOfInterestFilter) async -> [MKLocalSearchCompletion]?
   func geocodeAddress(from query: String) async -> MKPointAnnotation?
-  func createSearchToken(from indexPath: IndexPath) async -> UISearchToken
+//  func createSearchToken(from indexPath: IndexPath) async -> UISearchToken
 }
 
-final class LocalSearchModel: NSObject, LocalSearchModelInput {
+actor LocalSearchModel: NSObject, LocalSearchModelInput {
   private var hasUpdatedLocationSearchResults: Bool = false
   
   lazy var localSearchCompleter: MKLocalSearchCompleter = {
@@ -46,19 +44,23 @@ final class LocalSearchModel: NSObject, LocalSearchModelInput {
     return MKPointOfInterestFilter(including: categories)
   }
   
-  func searchLocation(from query: String?, in filter: MKPointOfInterestFilter) async -> [MKLocalSearchCompletion]? {
+  func searchLocation(from query: String, in filter: MKPointOfInterestFilter) async -> [MKLocalSearchCompletion] {
+    
     localSearchCompleter.pointOfInterestFilter = filter
     hasUpdatedLocationSearchResults = false
     
-    guard let query, query.isEmpty == true else { return nil }
     localSearchCompleter.queryFragment = query
     
     if (hasUpdatedLocationSearchResults == true) {
       return localSearchCompleter.results
     }
     else {
-      return nil
+      return []
     }
+  }
+  
+  private func update(with hasUpdated: Bool) {
+    hasUpdatedLocationSearchResults = hasUpdated
   }
   
   func geocodeAddress(from query: String) async -> MKPointAnnotation? {
@@ -80,7 +82,7 @@ final class LocalSearchModel: NSObject, LocalSearchModelInput {
     }
   }
   
-  func createSearchToken(from indexPath: IndexPath) async -> UISearchToken {
+//  func createSearchToken(from indexPath: IndexPath) async -> UISearchToken {
 //    let filter: (key: String, value: MKPointOfInterestCategory) = (
 //
 //    )
@@ -91,15 +93,19 @@ final class LocalSearchModel: NSObject, LocalSearchModelInput {
 //    }
 //
 //    return token
-  }
+//  }
 }
 
 extension LocalSearchModel: MKLocalSearchCompleterDelegate {
-  func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-    hasUpdatedLocationSearchResults = true
+  nonisolated func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+    Task {
+      await update(with: true)
+    }
   }
   
-  func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-    hasUpdatedLocationSearchResults = false
+  nonisolated func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+    Task {
+      await update(with: false)
+    }
   }
 }

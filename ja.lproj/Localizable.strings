@@ -26,9 +26,9 @@
 "mapTitle" = "見つける";
 "bookmarkTitle" = "お気に入り";
 // Title
+"filterLabel" = "検索フィルタ";
 "routingTitle" = "中間地点を検索する";
 "routingSectionTitle" = "おすすめの集合地点とその経路";
-"locationFilterSectionTitle" = "検索フィルタ";
 // LocationFilter
 "airport" = "空港";
 "amusementPark" = "遊園地";

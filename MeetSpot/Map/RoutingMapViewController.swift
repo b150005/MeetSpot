@@ -199,6 +199,7 @@ extension RoutingMapViewController {
       ]
       sheet.largestUndimmedDetentIdentifier = .medium
       sheet.prefersGrabberVisible = true
+      sheet.prefersScrollingExpandsWhenScrolledToEdge = false
       sheet.prefersEdgeAttachedInCompactHeight = true
       sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
     }

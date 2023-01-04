@@ -1,22 +1,25 @@
 import CoreLocation
 @preconcurrency import MapKit
 
+// TODO: - Presenterの大体的修正
+
+@MainActor
 protocol LocalSearchPresenterInput {
-  var numberOfRoutes: Int { get }
-  var numberOfLocations: Int { get }
-  
+  func didTapFilteringCategory(_ category: FilteringCategories)
+  func didTapToken(at tokenIndex: Int)
+  func didChangeSearchCondition(_ text: String?, tokens: [UISearchToken])
+  func localSearchCompletion(for row: Int) -> MKLocalSearchCompletion?
   func route(forRow row: Int) -> RoutingResponse?
-  func localSearchCompletion(forRow row: Int) -> MKLocalSearchCompletion?
-  @MainActor func didChangeSearchCondition(_ text: String, tokens: [UISearchToken])
 }
 
 @MainActor
 protocol LocalSearchPresenterOutput: AnyObject {
-  func updateRoutingResults(_ results: [RoutingResponse])
-  func updateLocalSearchCompletion(_ results: [MKLocalSearchCompletion]?)
   func insertToken(token: UISearchToken)
-  func showLocalSearchFilter()
-  func addAnnotation(_ annotation: MKPointAnnotation)
+  func deleteToken(at tokenIndex: Int)
+  func updateLocalSearchCompletion()
+//  func updateRoutingResults(_ results: [RoutingResponse])
+//  func showLocalSearchFilter()
+//  func addAnnotation(_ annotation: MKPointAnnotation)
 }
 
 final class LocalSearchPresenter: LocalSearchPresenterInput, @unchecked Sendable {
@@ -25,7 +28,6 @@ final class LocalSearchPresenter: LocalSearchPresenterInput, @unchecked Sendable
   
   private(set) var routes: [RoutingResponse] = [RoutingResponse]()
   private(set) var localSearchCompletions: [MKLocalSearchCompletion] = [MKLocalSearchCompletion]()
-  private(set) var tokens: [UISearchToken] = [UISearchToken]()
   
   var numberOfRoutes: Int {
     return routes.count
@@ -40,29 +42,40 @@ final class LocalSearchPresenter: LocalSearchPresenterInput, @unchecked Sendable
     self.model = model
   }
   
+  func didTapFilteringCategory(_ category: FilteringCategories) {
+    let token: UISearchToken = UISearchToken(icon: category.image, text: category.name)
+    token.representedObject = category.category
+    view.insertToken(token: token)
+  }
+  
+  func didTapToken(at tokenIndex: Int) {
+    view.deleteToken(at: tokenIndex)
+  }
+  
   func route(forRow row: Int) -> RoutingResponse? {
     guard row < routes.count else { return nil }
     return routes[row]
   }
   
-  func localSearchCompletion(forRow row: Int) -> MKLocalSearchCompletion? {
+  func localSearchCompletion(for row: Int) -> MKLocalSearchCompletion? {
     guard row < localSearchCompletions.count else { return nil }
     return localSearchCompletions[row]
   }
   
-  @MainActor func didChangeSearchCondition(_ text: String, tokens: [UISearchToken]) {
-    localSearchCompletions.removeAll()
+  func didChangeSearchCondition(_ text: String?, tokens: [UISearchToken]) {
+    guard let keyword = text, keyword.isEmpty
+    else {
+      localSearchCompletions.removeAll()
+      view.updateLocalSearchCompletion()
+      return
+    }
     
-    let filter: MKPointOfInterestFilter = self.model.extractFilter(from: tokens)
-    
+    let filter: MKPointOfInterestFilter = model.extractFilter(from: tokens)
     Task.detached {
-      guard text.isEmpty == true,
-            let results: [MKLocalSearchCompletion] = await self.model.searchLocation(from: text, in: filter)
-      else { return }
-      self.localSearchCompletions.append(contentsOf: results)
-      
+      let completions: [MKLocalSearchCompletion] = await self.model.searchLocation(from: keyword, in: filter)
       Task { @MainActor in
-        self.view.updateLocalSearchCompletion(self.localSearchCompletions)
+        self.localSearchCompletions = completions
+        self.view.updateLocalSearchCompletion()
       }
     }
   }
