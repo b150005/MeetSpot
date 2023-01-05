@@ -17,7 +17,7 @@ final class RoutingMapViewController: UIViewController {
   
   private let lookAroundImageView: LookAroundImageView = LookAroundImageView()
   
-  private let searchHalfModalVC: LocalSearchViewController = LocalSearchViewController()
+  private let localSearchViewController: LocalSearchViewController = LocalSearchViewController()
   
   override func loadView() {
     mapView.delegate = self
@@ -27,7 +27,7 @@ final class RoutingMapViewController: UIViewController {
     configureCurrentLocationButton()
     configureAnnotationListButton()
     configureLookAroundImageView()
-    configureSearchHalfModal()
+    configureLocalSearchViewController()
   }
   
   override func viewDidLoad() {
@@ -183,13 +183,13 @@ extension RoutingMapViewController {
     presenter.didTapLookAroundView()
   }
   
-  private func configureSearchHalfModal() {
+  private func configureLocalSearchViewController() {
     let model: LocalSearchModel = LocalSearchModel()
-    let presenter: LocalSearchPresenterInput = LocalSearchPresenter(view: searchHalfModalVC, model: model)
-    searchHalfModalVC.inject(presenter: presenter)
+    let presenter: LocalSearchPresenterInput = LocalSearchPresenter(view: localSearchViewController, model: model)
+    localSearchViewController.inject(presenter: presenter)
     
-    searchHalfModalVC.isModalInPresentation = true
-    if let sheet: UISheetPresentationController = searchHalfModalVC.sheetPresentationController {
+    localSearchViewController.isModalInPresentation = true
+    if let sheet: UISheetPresentationController = localSearchViewController.sheetPresentationController {
       sheet.detents = [
         .custom { (context: UISheetPresentationControllerDetentResolutionContext) -> CGFloat? in
           return context.maximumDetentValue * 0.1
@@ -206,7 +206,7 @@ extension RoutingMapViewController {
   }
   
   private func presentSearchHalfModal() {
-    present(searchHalfModalVC, animated: false)
+    present(localSearchViewController, animated: false)
   }
 }
 

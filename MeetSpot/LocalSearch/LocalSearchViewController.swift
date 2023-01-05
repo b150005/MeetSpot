@@ -4,7 +4,7 @@ import MapKit
 final class LocalSearchViewController: UIViewController {
   private var presenter: LocalSearchPresenterInput!
   
-  private var localSearchController: UISearchController!
+  private let localSearchBar: UISearchBar = UISearchBar()
   private let localSearchResultTableViewController: LocalSearchResultTableViewController = LocalSearchResultTableViewController()
   
   private let filterLabel: UILabel = UILabel()
@@ -15,11 +15,11 @@ final class LocalSearchViewController: UIViewController {
     
     view.backgroundColor = .white
     configureLocalSearchResultTableViewController()
-    configureLocalSearchController()
+    configureLocalSearchBar()
     configureFilterLabel()
     configureFilterScrollView()
     
-    localSearchController.searchBar.setNeedsUpdateConstraints()
+    localSearchBar.setNeedsUpdateConstraints()
     filterLabel.setNeedsUpdateConstraints()
     filterScrollView.setNeedsUpdateConstraints()
   }
@@ -27,26 +27,23 @@ final class LocalSearchViewController: UIViewController {
   override func updateViewConstraints() {
     super.updateViewConstraints()
     
-    print("Hello!!")
-    
-    let parentView: UIView = navigationItem.searchController!.searchBar
     NSLayoutConstraint.activate([
-      localSearchController.searchBar.widthAnchor.constraint(equalTo: parentView.widthAnchor),
-      localSearchController.searchBar.heightAnchor.constraint(equalToConstant: parentView.frame.height / 10),
-      localSearchController.searchBar.topAnchor.constraint(equalTo: parentView.topAnchor),
-      localSearchController.searchBar.centerXAnchor.constraint(equalTo: parentView.centerXAnchor)
+      localSearchBar.widthAnchor.constraint(equalTo: view.widthAnchor),
+      localSearchBar.heightAnchor.constraint(equalToConstant: 50),
+      localSearchBar.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.margin),
+      localSearchBar.centerXAnchor.constraint(equalTo: view.centerXAnchor)
     ])
     
     NSLayoutConstraint.activate([
-      filterLabel.widthAnchor.constraint(equalTo: view.widthAnchor),
+      filterLabel.widthAnchor.constraint(equalTo: localSearchBar.widthAnchor),
       filterLabel.heightAnchor.constraint(equalToConstant: Constants.margin * 3),
-      filterLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.margin),
+      filterLabel.topAnchor.constraint(equalTo: localSearchBar.bottomAnchor, constant: Constants.margin),
       filterLabel.leftAnchor.constraint(equalTo: view.leftAnchor)
     ])
     
     NSLayoutConstraint.activate([
       filterScrollView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 10),
-      filterScrollView.heightAnchor.constraint(equalToConstant: Constants.margin * 10),
+      filterScrollView.heightAnchor.constraint(equalToConstant: Constants.margin * 11),
       filterScrollView.topAnchor.constraint(equalTo: filterLabel.bottomAnchor, constant: Constants.margin),
       filterScrollView.leftAnchor.constraint(equalTo: view.leftAnchor)
     ])
@@ -87,18 +84,13 @@ extension LocalSearchViewController {
     self.presenter = presenter
   }
   
-  private func configureLocalSearchController() {
-    localSearchController = UISearchController(searchResultsController: localSearchResultTableViewController)
-    localSearchController.searchResultsUpdater = self
-    localSearchController.searchBar.delegate = self
-    localSearchController.hidesNavigationBarDuringPresentation = true
-    localSearchController.obscuresBackgroundDuringPresentation = false
-    
-    localSearchController.searchBar.placeholder = NSLocalizedString("", comment: "")
+  private func configureLocalSearchBar() {
+    localSearchBar.delegate = self
+    localSearchBar.placeholder = NSLocalizedString("searchPlaceholder", comment: "")
     definesPresentationContext = true
     
-    localSearchController.searchBar.translatesAutoresizingMaskIntoConstraints = false
-    navigationItem.searchController = localSearchController
+    localSearchBar.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(localSearchBar)
   }
   
   private func configureLocalSearchResultTableViewController() {
@@ -115,23 +107,24 @@ extension LocalSearchViewController {
   private func configureFilterScrollView() {
     filterScrollView.backgroundColor = .green
     filterScrollView.isDirectionalLockEnabled = true
+    filterScrollView.isScrollEnabled = true
+    filterScrollView.showsVerticalScrollIndicator = false
+    filterScrollView.showsHorizontalScrollIndicator = true
     filterScrollView.translatesAutoresizingMaskIntoConstraints = false
     
     view.addSubview(filterScrollView)
     
     for category: FilteringCategories in FilteringCategories.allCases {
-      let toggle: UIButton = UIButton(type: .roundedRect)
-      var configuration: UIButton.Configuration = .gray()
+      let toggle: UIButton = UIButton(type: .system)
+      var configuration: UIButton.Configuration = .tinted()
       configuration.title = category.name
-      configuration.image = category.image
-      configuration.cornerStyle = .dynamic
+      configuration.image = category.image?.scalePreservingAspectRatio().withRenderingMode(.alwaysTemplate)
+      configuration.imagePadding = Constants.margin / 2
       toggle.configuration = configuration
-      toggle.clipsToBounds = true
-      toggle.sizeToFit()
-      toggle.frame.size = CGSize(width: toggle.frame.width + Constants.margin * 2, height: toggle.frame.height)
       toggle.translatesAutoresizingMaskIntoConstraints = false
 //      toggle.setNeedsUpdateConstraints()
       
+      toggle.sizeToFit()
       toggle.addAction(UIAction() { [weak self] _ in
         guard let self else { return }
         self.presenter.didTapFilteringCategory(category)
@@ -144,21 +137,15 @@ extension LocalSearchViewController {
 
 extension LocalSearchViewController: LocalSearchPresenterOutput {
   func insertToken(token: UISearchToken) {
-    localSearchController.searchBar.searchTextField.insertToken(token, at: 0)
+    localSearchBar.searchTextField.insertToken(token, at: 0)
   }
   
   func deleteToken(at tokenIndex: Int) {
-    localSearchController.searchBar.searchTextField.removeToken(at: tokenIndex)
+    localSearchBar.searchTextField.removeToken(at: tokenIndex)
   }
   
   func updateLocalSearchCompletion() {
     localSearchResultTableViewController.tableView.reloadData()
-  }
-}
-
-extension LocalSearchViewController: UISearchResultsUpdating {
-  func updateSearchResults(for searchController: UISearchController) {
-    //
   }
 }
 
@@ -168,8 +155,6 @@ extension LocalSearchViewController: UISearchBarDelegate {
   }
   
   func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-    localSearchController.showsSearchResultsController = true
-    
     Task {
       try await Task.sleep(for: .milliseconds(100))
       presenter.didChangeSearchCondition(searchBar.text, tokens: searchBar.searchTextField.tokens)
@@ -178,9 +163,3 @@ extension LocalSearchViewController: UISearchBarDelegate {
     return true
   }
 }
-
-//extension LocalSearchViewController: UIScrollViewDelegate {
-//  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//    filterScrollView.startPoi
-//  }
-//}

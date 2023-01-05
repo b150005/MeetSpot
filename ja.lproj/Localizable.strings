@@ -26,6 +26,7 @@
 "mapTitle" = "見つける";
 "bookmarkTitle" = "お気に入り";
 // Title
+"searchPlaceholder" = "場所を検索";
 "filterLabel" = "検索フィルタ";
 "routingTitle" = "中間地点を検索する";
 "routingSectionTitle" = "おすすめの集合地点とその経路";

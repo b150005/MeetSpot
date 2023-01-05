@@ -32,6 +32,7 @@
 		14DAEE9728DDDE0A0099DBC1 /* RoutingMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAEE9628DDDE0A0099DBC1 /* RoutingMapModel.swift */; };
 		14DAEE9928DDDEFB0099DBC1 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAEE9828DDDEFB0099DBC1 /* Alert.swift */; };
 		14E1B06228E3327900640703 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 14E1B06428E3327900640703 /* Localizable.strings */; };
+		14ECA0602966E4DC005E76CF /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ECA05F2966E4DC005E76CF /* UIImage.swift */; };
 		14EF70DA293B34E000AF8129 /* LocalSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EF70D9293B34E000AF8129 /* LocalSearchViewController.swift */; };
 		474FA4DF291F6D19000E9773 /* CLPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474FA4DE291F6D19000E9773 /* CLPlacemark.swift */; };
 		47B55AEE28A6586900A0D67E /* AnnotationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B55AED28A6586900A0D67E /* AnnotationTableViewController.swift */; };
@@ -67,6 +68,7 @@
 		14DAEE9828DDDEFB0099DBC1 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		14E1B06528E332D500640703 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		14E1B06628E33B6000640703 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		14ECA05F2966E4DC005E76CF /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		14EF70D9293B34E000AF8129 /* LocalSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSearchViewController.swift; sourceTree = "<group>"; };
 		474FA4DE291F6D19000E9773 /* CLPlacemark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLPlacemark.swift; sourceTree = "<group>"; };
 		47B55AED28A6586900A0D67E /* AnnotationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationTableViewController.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				14560EC028730192003EA61F /* TabBarController.swift */,
 				1450C1F5291785D100EFC44E /* Constants.swift */,
 				14D2F97428CF4E5100643455 /* UserInfoKeys.swift */,
+				14ECA05F2966E4DC005E76CF /* UIImage.swift */,
 				14DAEE9828DDDEFB0099DBC1 /* Alert.swift */,
 				474FA4DE291F6D19000E9773 /* CLPlacemark.swift */,
 				14C2C27C28E71DD300DAFC27 /* RoutingResponse.swift */,
@@ -260,6 +263,7 @@
 				14B9AECE293B302E00839651 /* CardTableViewCell.swift in Sources */,
 				474FA4DF291F6D19000E9773 /* CLPlacemark.swift in Sources */,
 				14064808293F480700A189D9 /* LocalSearchResultTableViewController.swift in Sources */,
+				14ECA0602966E4DC005E76CF /* UIImage.swift in Sources */,
 				14077DE028BE678F00E02C8C /* FloatingActionButton.swift in Sources */,
 				14B4F77C287DAF39007FC4A0 /* BookmarkModel.swift in Sources */,
 				1450C1F6291785D100EFC44E /* Constants.swift in Sources */,
